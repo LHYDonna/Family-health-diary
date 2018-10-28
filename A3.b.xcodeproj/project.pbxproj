@@ -28,11 +28,7 @@
 		06F61520093E3C0773EC5F17 /* Pods_A3_bTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */; };
 		12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F70687217F22D4009DC136 /* GoogleService-Info.plist */; };
 		12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CDCD042173390000A7E02B /* CoreData.framework */; };
-<<<<<<< HEAD
 		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
-=======
-		12F706BC21842B37009DC136 /* A3_b.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12F706BA21842B36009DC136 /* A3_b.xcdatamodeld */; };
->>>>>>> 943961d7c6ed6264e63fe0c3e4966edee51c8d71
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
 		F1F6827E65B1EE878677646B /* Pods_A3_b.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; };
 /* End PBXBuildFile section */
