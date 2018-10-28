@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bdh-fw-olK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bdh-fw-olK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -83,7 +83,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-7s-nWX">
-                                <rect key="frame" x="251" y="371" width="65" height="29"/>
+                                <rect key="frame" x="250.5" y="371" width="65" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Click here"/>
                                 <connections>
@@ -522,7 +522,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UaQ-2Z-WLJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7062" y="230"/>
+            <point key="canvasLocation" x="5062" y="254"/>
         </scene>
         <!--Password Reset-->
         <scene sceneID="C4I-F2-myo">
@@ -620,7 +620,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zrL-DC-Lxy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7062" y="-561"/>
+            <point key="canvasLocation" x="5062" y="-473"/>
         </scene>
         <!--Register Page-->
         <scene sceneID="Qjg-fT-Kce">
@@ -849,7 +849,7 @@
         <!--Make Video-->
         <scene sceneID="tex-QT-3vq">
             <objects>
-                <viewController title="Make Video" id="OSp-32-FLD" sceneMemberID="viewController">
+                <viewController title="Make Video" id="OSp-32-FLD" customClass="MakeVideoViewController" customModule="A3_b" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Smd-Ay-92h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -860,6 +860,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="561184111.94755697">
                                     <!--2018-10-14 04:28:31 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="setStartDate:" destination="OSp-32-FLD" eventType="valueChanged" id="KLv-is-Pkb"/>
+                                </connections>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Z5M-OA-uar">
                                 <rect key="frame" x="0.0" y="194" width="375" height="54"/>
@@ -867,6 +870,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="561184111.94755697">
                                     <!--2018-10-14 04:28:31 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="setEndDate:" destination="OSp-32-FLD" eventType="valueChanged" id="J2u-SQ-c4u"/>
+                                </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Begin at :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HiV-rQ-cj9">
                                 <rect key="frame" x="16" y="79" width="81" height="39"/>
@@ -886,6 +892,9 @@
                                 <rect key="frame" x="16" y="256" width="45" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="View"/>
+                                <connections>
+                                    <action selector="viewGif:" destination="OSp-32-FLD" eventType="touchUpInside" id="Oec-WZ-AAp"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUS-DZ-b0V">
                                 <rect key="frame" x="16" y="611" width="34" height="30"/>
@@ -905,6 +914,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fiz-AT-w7a"/>
                     </view>
+                    <connections>
+                        <outlet property="endDatePicker" destination="Z5M-OA-uar" id="pwC-vY-maZ"/>
+                        <outlet property="imageView" destination="xWw-36-3Ch" id="XKa-fL-stk"/>
+                        <outlet property="startDatePicker" destination="HEQ-BJ-uEP" id="dfa-7Q-KAf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3n-PE-SXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

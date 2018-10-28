@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		031FF9372182C33200617692 /* A3_b.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 031FF9352182C33200617692 /* A3_b.xcdatamodeld */; };
 		03CDCCB72172DC8700A7E02B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCB62172DC8700A7E02B /* AppDelegate.swift */; };
 		03CDCCB92172DC8800A7E02B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCB82172DC8800A7E02B /* ViewController.swift */; };
 		03CDCCBC2172DC8800A7E02B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03CDCCBA2172DC8800A7E02B /* Main.storyboard */; };
@@ -29,6 +28,7 @@
 		06F61520093E3C0773EC5F17 /* Pods_A3_bTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */; };
 		12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F70687217F22D4009DC136 /* GoogleService-Info.plist */; };
 		12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CDCD042173390000A7E02B /* CoreData.framework */; };
+		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
 		F1F6827E65B1EE878677646B /* Pods_A3_b.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +80,7 @@
 		0F796215C5590382BE9CC710 /* Pods_A3_b.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_b.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12F70687217F22D4009DC136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9341964414120DDE85D5F8 /* Pods-A3.bUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bUITests/Pods-A3.bUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeVideoViewController.swift; sourceTree = "<group>"; };
 		65E013667EB3FCC3F24A10B4 /* Pods-A3.bTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bTests/Pods-A3.bTests.release.xcconfig"; sourceTree = "<group>"; };
 		A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_bUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_bTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +163,7 @@
 				03CDCD01217316BE00A7E02B /* BodyFeature.swift */,
 				031FF9352182C33200617692 /* A3_b.xcdatamodeld */,
 				12F70687217F22D4009DC136 /* GoogleService-Info.plist */,
+				33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */,
 			);
 			path = A3.b;
 			sourceTree = "<group>";
@@ -431,6 +433,7 @@
 				03CDCCF42172F69D00A7E02B /* PersonalFileViewController.swift in Sources */,
 				03CDCCE82172E65B00A7E02B /* LoginViewController.swift in Sources */,
 				03CDCCEC2172F42A00A7E02B /* PasswordResetViewController.swift in Sources */,
+				33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */,
 				03CDCCEA2172EA4400A7E02B /* RegisterViewController.swift in Sources */,
 				03CDCD02217316BE00A7E02B /* BodyFeature.swift in Sources */,
 				03CDCCF22172F5FB00A7E02B /* PersonTableViewCell.swift in Sources */,
@@ -439,7 +442,6 @@
 				03CDCCB72172DC8700A7E02B /* AppDelegate.swift in Sources */,
 				03CDCCF82172FB3200A7E02B /* HeightChartViewController.swift in Sources */,
 				03CDCCEE2172F45000A7E02B /* HomeViewController.swift in Sources */,
-				031FF9372182C33200617692 /* A3_b.xcdatamodeld in Sources */,
 				03CDCCF62172F84D00A7E02B /* TodayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

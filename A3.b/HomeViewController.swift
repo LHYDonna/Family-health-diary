@@ -106,9 +106,9 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             controller.showPersonDelegate = self
             controller.person = person
         }
-        if segue.identifier == "chartSegue"{
-            let controller = segue.destination as! HeightChartViewController
-            controller.showPersonDelegate = self
+        if segue.identifier == "videoSegue"{
+            let controller = segue.destination as! MakeVideoViewController
+            controller.personDelegate = self
             controller.person = person
         }
     }
