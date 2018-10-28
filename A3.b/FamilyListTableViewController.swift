@@ -92,18 +92,23 @@ class FamilyListTableViewController: UITableViewController {
         
         let person: Person = self.personList[indexPath.row]
         cell.nameLabel.text = person.name
-//        
-//        var string = person.portrait!
-//        string.remove(at: string.startIndex)
-//        let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-//        cell.portraitImage.image = UIImage(data: imageData! as Data)!
-//        
-//        let featureData = person.data.last
-//        
-//        cell.heightLabel.text = "\(String(describing: featureData?.height))"
-//        cell.weightLabel.text = "\(String(describing: featureData?.weight))"
-//        
-//        cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
+      
+        var string = person.portrait!
+        if (string.elementsEqual("Default")){
+            string.remove(at: string.startIndex)
+            let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+            cell.portraitImage.image = UIImage(data: imageData! as Data)!
+        }
+        else{
+            cell.portraitImage.image = UIImage.init(named: "default")
+        }
+        
+        let featureData = person.data.last
+        
+        cell.heightLabel.text = "\(String(describing: featureData?.height))"
+        cell.weightLabel.text = "\(String(describing: featureData?.weight))"
+        
+        cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
         return cell
     }
     
