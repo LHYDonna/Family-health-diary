@@ -75,7 +75,7 @@ class RegisterViewController: UIViewController {
         let height = heightTextField.text
         let weight = weightTextField.text
         let userID = generateId()
-        let person = Person(user_id: userID, email: email, name: password,password: name, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, data: [])
+        let person = Person(user_id: userID, email: email, name: password,password: name, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight,raspberryID: raspberryID, data: [])
         person.toString()
         personList.append(person)
         person_idList.append(person.user_id!)
@@ -94,6 +94,7 @@ class RegisterViewController: UIViewController {
                           "height": height,
                           "weight": weight,
                           "gender": gender,
+                          "raspberryID": raspberryID,
                           "data": []] as [String : Any]
         
         self.ref.child(raspberryID!).child("member").child(String(userID)).setValue(personData)

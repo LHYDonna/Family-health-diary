@@ -11,16 +11,14 @@ import Firebase
 
 class FamilyListTableViewController: UITableViewController {
 
-    var raspberryID: String?
+    var person: Person?
     var personList: [Person] = []
     var personCell: PersonTableViewCell?
-    var ref = Database.database().reference().child("assignment3-2bbc1")
+    var ref = Database.database().reference().child("RaspberryRepository")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadData()
-        print(personList.count)
     }
 
 
@@ -29,12 +27,9 @@ class FamilyListTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
-        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,7 +38,7 @@ class FamilyListTableViewController: UITableViewController {
     }
 
     func loadData(){
-        ref.child(raspberryID!).child("member").observeSingleEvent(of: .value) { (snapShot) in
+        ref.child(person!.raspberryID!).child("member").observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
                 for item in items{
                     let userID = item.value["userID"] as! Int
@@ -55,6 +50,7 @@ class FamilyListTableViewController: UITableViewController {
                     let height = item.value["height"] as! String
                     let weight = item.value["weight"] as! String
                     let dob = item.value["dob"] as! Double
+                    let raspberry = item.value["raspberryID"] as! String
                     let registerDate = item.value["registerDate"] as! Double
                     var bodyData: [BodyFeature] = []
                     if let itemData = item.value["data"] as? [String: AnyObject]{
@@ -70,14 +66,8 @@ class FamilyListTableViewController: UITableViewController {
                             bodyData.append(bodyFeature!)
                         }
                     }
-                    
-                    let person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, data: bodyData)
-                    print(person.name)
-                    
+                    let person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, raspberryID: raspberry, data: bodyData)
                     self.personList.append(person)
-                    print("------- count")
-                    print(self.personList.count)
-                    
                 }
                self.tableView.reloadData()
             }
@@ -95,20 +85,30 @@ class FamilyListTableViewController: UITableViewController {
       
         var string = person.portrait!
         if (string.elementsEqual("Default")){
-            string.remove(at: string.startIndex)
+            cell.portraitImage.image = UIImage.init(named: "default")
+        }
+        else{
+            if (string.first == "b"){
+                string.remove(at: string.startIndex)
+            }
             let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
             cell.portraitImage.image = UIImage(data: imageData! as Data)!
         }
-        else{
-            cell.portraitImage.image = UIImage.init(named: "default")
-        }
         
+        if (person.data.count != 0){
         let featureData = person.data.last
         
-        cell.heightLabel.text = "\(String(describing: featureData?.height))"
-        cell.weightLabel.text = "\(String(describing: featureData?.weight))"
+            cell.heightLabel.text = "\(String(describing: featureData!.height!))"
+            cell.weightLabel.text = "\(String(describing: featureData!.weight!))"
         
         cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
+        }
+        else{
+            cell.heightLabel.text = person.height
+            cell.weightLabel.text = person.weight
+            
+            cell.dateLabel.text = "NOT TAKEN YET"
+        }
         return cell
     }
     

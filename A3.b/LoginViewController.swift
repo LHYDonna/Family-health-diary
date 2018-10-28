@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    var raspberryID: String?
+    
     //var handle = AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
@@ -49,7 +51,16 @@ class LoginViewController: UIViewController {
                 self.displayErrorMessage(error!.localizedDescription)
             }
             else{
-                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                let ref = Database.database().reference()
+                ref.child("RaspberryMatchTable").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
+                    if let items = snapShot.value as? [String: AnyObject]{
+                        for item in items{
+                            //let emailA = item.value["email"] as! String
+                            self.raspberryID = item.value["raspberryID"] as! String
+                            }
+                        self.performSegue(withIdentifier: "loginSegue", sender: self.raspberryID)
+                        }
+                    }
             }
         }        
     }
@@ -60,14 +71,14 @@ class LoginViewController: UIViewController {
         self.present(allertController,animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "loginSegue"{
+            print("+++++++++++++++++++++++3")
+            print(self.raspberryID)
+            let controller = segue.destination as! HomeViewController
+            controller.raspberryID = raspberryID
+        }
     }
-    */
+    
 
 }
