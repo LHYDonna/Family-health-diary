@@ -7,18 +7,22 @@
 //
 
 import UIKit
+import Firebase
 
-class FamilyTableViewController: UITableViewController {
+class FamilyListTableViewController: UITableViewController {
 
+    var raspberryID: String?
+    var personList: [Person] = []
+    var personCell: PersonTableViewCell?
+    var ref = Database.database().reference().child("assignment3-2bbc1")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        loadData()
+        print(personList.count)
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,23 +33,85 @@ class FamilyTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
+        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return personList.count
     }
 
-    /*
+    func loadData(){
+        ref.child(raspberryID!).child("member").observeSingleEvent(of: .value) { (snapShot) in
+            if let items = snapShot.value as? [String: AnyObject]{
+                for item in items{
+                    let userID = item.value["userID"] as! Int
+                    let name = item.value["name"] as! String
+                    let email = item.value["email"] as! String
+                    let password = item.value["password"] as! String
+                    let gender = item.value["gender"] as! String
+                    let portrait = item.value["portrait"] as! String
+                    let height = item.value["height"] as! String
+                    let weight = item.value["weight"] as! String
+                    let dob = item.value["dob"] as! Double
+                    let registerDate = item.value["registerDate"] as! Double
+                    var bodyData: [BodyFeature] = []
+                    if let itemData = item.value["data"] as? [String: AnyObject]{
+                        var bodyFeature: BodyFeature?
+                        for oneData in itemData{
+                            let date = oneData.value["created_date"] as! Double
+                            let photo = oneData.value["photo"] as! String
+                            let height = oneData.value["height"] as! Double
+                            let weight = oneData.value["wight"] as! Double
+                            let photoID = oneData.value["photoID"] as! Int
+                            let id = oneData.value["userID"] as! Int
+                            bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
+                            bodyData.append(bodyFeature!)
+                        }
+                    }
+                    
+                    let person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, data: bodyData)
+                    print(person.name)
+                    
+                    self.personList.append(person)
+                    print("------- count")
+                    print(self.personList.count)
+                    
+                }
+               self.tableView.reloadData()
+            }
+        }
+        
+        
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        print ("--- table view is loading")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "personCell", for: indexPath) as! PersonTableViewCell
+        
+        let person: Person = self.personList[indexPath.row]
+        cell.nameLabel.text = person.name
+//        
+//        var string = person.portrait!
+//        string.remove(at: string.startIndex)
+//        let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//        cell.portraitImage.image = UIImage(data: imageData! as Data)!
+//        
+//        let featureData = person.data.last
+//        
+//        cell.heightLabel.text = "\(String(describing: featureData?.height))"
+//        cell.weightLabel.text = "\(String(describing: featureData?.weight))"
+//        
+//        cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
         return cell
     }
-    */
+    
+    // Define the height of the cell
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

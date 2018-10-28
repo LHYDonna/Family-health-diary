@@ -15,15 +15,13 @@ protocol ManagePersonProtocol{
 
 class HomeViewController: UIViewController ,ManagePersonProtocol{
     
-
-    
-
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var portraitImage: UIImageView!
     
     
     var ref = Database.database().reference().child("assignment3-2bbc1")
     var person: Person?
+    var raspberryID = "raspberry"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +43,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         // Dispose of any resources that can be recreated.
     }
     
-    func fetchCurrentUser()
-    {
+    func fetchCurrentUser(){
         let email = Auth.auth().currentUser?.email
         ref.child("raspberry").child("member").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
@@ -68,7 +65,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                             //print("=================")
                             //print(oneData.value["create_date"])
                             let date = oneData.value["created_date"] as! Double
-                            let photo = oneData.value["photo"] as! String
+                            let photo = "kk"
                             let height = oneData.value["height"] as! Double
                             let weight = oneData.value["wight"] as! Double
                             let photoID = oneData.value["photoID"] as! Int
@@ -110,6 +107,10 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             let controller = segue.destination as! MakeVideoViewController
             controller.personDelegate = self
             controller.person = person
+        }
+        if segue.identifier == "familySegue"{
+            let controller = segue.destination as! FamilyListTableViewController
+            controller.raspberryID = raspberryID
         }
     }
 
