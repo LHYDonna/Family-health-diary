@@ -73,52 +73,6 @@ class PersonalFileViewController: UIViewController {
         let todayFeature = person?.data.last
         heightTextField.text = "\(String(describing: todayFeature!.height!))"
         weightTextField.text = "\(String(describing: todayFeature!.weight!))"
-        
-//        let email = Auth.auth().currentUser?.email
-//        ref.child("raspberry").child("member").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
-//            if let items = snapShot.value as? [String: AnyObject]{
-//                for item in items{
-//                    let userID = item.value["userID"] as! Int
-//                    let name = item.value["name"] as! String
-//                    let email = item.value["email"] as! String
-//                    let password = item.value["password"] as! String
-//                    let gender = item.value["gender"] as! String
-//                    let portrait = item.value["portrait"] as! String
-//                    let height = item.value["height"] as! String
-//                    let weight = item.value["weight"] as! String
-//                    let dob = item.value["dob"] as! Double
-//                    let registerDate = item.value["registerDate"] as! Double
-//                    var bodyData: [BodyFeature] = []
-//                    if let itemData = item.value["data"] as? [String: AnyObject]{
-//                        var bodyFeature: BodyFeature?
-//                        for oneData in itemData{
-//                            //print("=================")
-//                            //print(oneData.value["create_date"])
-//                            let date = oneData.value["created_date"] as! Double
-//                            let photo = oneData.value["photo"] as! String
-//                            let height = oneData.value["height"] as! Double
-//                            let weight = oneData.value["wight"] as! Double
-//                            let photoID = oneData.value["photoID"] as! Int
-//                            let id = oneData.value["userID"] as! Int
-//                            bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
-//                            bodyData.append(bodyFeature!)
-//                        }
-//                    }
-//                    
-//                    self.person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, data: bodyData)
-//                    print("++++++++++++++")
-//                    print(bodyData.count)
-//                    let latestBodyFeature = bodyData.last
-//                    self.heightTextField.text = String(describing: latestBodyFeature!.height!)
-//                    self.weightTextField.text = String(describing: latestBodyFeature!.weight!)
-////                    self.namelabel.text = self.person?.name
-////                    var string = self.person?.portrait!
-////                    string!.remove(at: (string?.startIndex)!)
-////                    let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-////                    self.portraitImage.image = UIImage(data: imageData! as Data)!
-//                }
-//            }
-//        }
     }
     
     @IBAction func updateFileBtn(_ sender: Any) {
