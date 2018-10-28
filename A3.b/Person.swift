@@ -19,9 +19,10 @@ class Person: NSObject {
     var registerDate: Double?
     var height: String?
     var weight: String?
+    var raspberryID: String?
     var data: [BodyFeature]
     
-    init(user_id: Int?, email: String?, name: String?, password: String?, dob: Double?, portrait: String?, gender: String, registerDate: Double?, height: String?, weight: String?,data: [BodyFeature]){
+    init(user_id: Int?, email: String?, name: String?, password: String?, dob: Double?, portrait: String?, gender: String, registerDate: Double?, height: String?, weight: String?,raspberryID: String?, data: [BodyFeature]){
         self.user_id = user_id
         self.email = email
         self.password = password
@@ -32,6 +33,7 @@ class Person: NSObject {
         self.registerDate = registerDate
         self.height = height
         self.weight = weight
+        self.raspberryID = raspberryID
         self.data = data
     }
     
@@ -46,6 +48,7 @@ class Person: NSObject {
         print("registerDate", registerDate as Any)
         print("height", height as Any)
         print("weight", weight as Any)
+        print("raspberryID", raspberryID as Any)
         for oneData in data{
             oneData.toString()
         }

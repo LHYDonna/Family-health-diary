@@ -19,10 +19,10 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     @IBOutlet weak var portraitImage: UIImageView!
     
     
-    var ref = Database.database().reference().child("assignment3-2bbc1")
+    var ref = Database.database().reference()
     var person: Person?
-    var raspberryID = "raspberry"
-
+    var raspberryID: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCurrentUser()
@@ -32,10 +32,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     func editPersonFile(person: Person) {
         self.person = person
         namelabel.text = person.name
-//        var string = person.portrait!
-//        string.remove(at: string.startIndex)
-//        let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-//        portraitImage.image = UIImage(data: imageData! as Data)!
+        showPortrait()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +42,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     
     func fetchCurrentUser(){
         let email = Auth.auth().currentUser?.email
-        ref.child("raspberry").child("member").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
+        ref.child("RaspberryRepository").child(raspberryID!).child("member").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
                 for item in items{
                     let userID = item.value["userID"] as! Int
@@ -56,14 +53,13 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                     let portrait = item.value["portrait"] as! String
                     let height = item.value["height"] as! String
                     let weight = item.value["weight"] as! String
+                    let raspberry = item.value["raspberryID"] as! String
                     let dob = item.value["dob"] as! Double
                     let registerDate = item.value["registerDate"] as! Double
                     var bodyData: [BodyFeature] = []
                     if let itemData = item.value["data"] as? [String: AnyObject]{
                         var bodyFeature: BodyFeature?
                         for oneData in itemData{
-                            //print("=================")
-                            //print(oneData.value["create_date"])
                             let date = oneData.value["created_date"] as! Double
                             let photo = oneData.value["photo"] as! String
                             let height = oneData.value["height"] as! Double
@@ -74,17 +70,27 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                             bodyData.append(bodyFeature!)
                         }
                     }
-                    
-                    self.person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, data: bodyData)
+                    self.person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, raspberryID: raspberry, data: bodyData)
                     print("++++++++++++++")
                     print(bodyData.count)
                     self.namelabel.text = self.person?.name
-                    var string = self.person?.portrait!
-                    string!.remove(at: (string?.startIndex)!)
-                    let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                    self.portraitImage.image = UIImage(data: imageData! as Data)!
+                    self.showPortrait()
                 }
             }
+        }
+    }
+    
+    func showPortrait(){
+        var string = person?.portrait!
+        if (string!.elementsEqual("Default")){
+            portraitImage.image = UIImage.init(named: "default")
+        }
+        else{
+            if (string!.first == "b"){
+                string!.remove(at: (string?.startIndex)!)
+            }
+            let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+            portraitImage.image = UIImage(data: imageData! as Data)!
         }
     }
 
@@ -110,7 +116,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         }
         if segue.identifier == "familySegue"{
             let controller = segue.destination as! FamilyListTableViewController
-            controller.raspberryID = raspberryID
+            controller.person = person
         }
     }
 
