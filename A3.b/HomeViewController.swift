@@ -65,7 +65,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                             //print("=================")
                             //print(oneData.value["create_date"])
                             let date = oneData.value["created_date"] as! Double
-                            let photo = oneData.value["photo"] as! Double
+                            let photo = oneData.value["photo"] as! String
                             let height = oneData.value["height"] as! Double
                             let weight = oneData.value["wight"] as! Double
                             let photoID = oneData.value["photoID"] as! Int
