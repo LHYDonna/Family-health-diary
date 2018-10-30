@@ -60,7 +60,7 @@ class FamilyListTableViewController: UITableViewController {
                             let photo = oneData.value["photo"] as! String
                             let height = oneData.value["height"] as! Double
                             let weight = oneData.value["wight"] as! Double
-                            let photoID = oneData.value["photoID"] as! Int
+                            let photoID = oneData.value["photoID"] as! String
                             let id = oneData.value["userID"] as! Int
                             bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
                             bodyData.append(bodyFeature!)
