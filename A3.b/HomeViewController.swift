@@ -110,9 +110,10 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             controller.person = person
         }
         if segue.identifier == "videoSegue"{
-            let controller = segue.destination as! MakeVideoViewController
-            controller.personDelegate = self
+            let controller = segue.destination as! ImageProcessingHomeViewController
+            //controller.personDelegate = self
             controller.person = person
+            controller.raspberryID = raspberryID
         }
         if segue.identifier == "familySegue"{
             let controller = segue.destination as! FamilyListTableViewController

@@ -18,9 +18,14 @@ class MakeVideoViewController: UIViewController {
     var startDate:Int?
     var endDate:Int?
     
-    var ref = Database.database().reference().child("assignment3-2bbc1")
+    let fileManager = FileManager.default
+    
+    var ref = Database.database().reference()
     var person:Person?
+    var raspberryID:String?
     var personDelegate: ManagePersonProtocol?
+    var bodyFeatures: [BodyFeature] = []
+    var imagesDictionary: [String:UIImage] = [String:UIImage]()
     
     var handle: DatabaseHandle?
     var timeInterval: Double?
@@ -43,14 +48,15 @@ class MakeVideoViewController: UIViewController {
     
     @IBAction func viewGif(_ sender: Any) {
         //bodyFeatures = getAllBodyFeaturesBasedOnTimeSelected()
-        let bodyFeatures = getAllBodyFeaturesBasedOnTimeSelected()
+        getAllBodyFeaturesBasedOnTimeSelected()
         //images = generateImagesFromBodyFeatures(bodyFeatures: [BodyFeature])
-        let images = generateImagesFromBodyFeatures(bodyFeatures: bodyFeatures)
+        //let images = self.generateImagesFromBodyFeatures(bodyFeatures: bodyFeatures)
         //gif = generateGifFromImages(images)
-        generateGifFromImages(images:images)
+        //self.generateGifFromImages(images:images)
     }
     
-    func generateGifFromImages(images: [UIImage]) {
+    func generateGifFromImages(imagesDic: [String:UIImage]) {
+        let images = [UIImage](imagesDic.values)
         imageView.animationImages = images
         imageView.animationDuration = 0.5
         imageView.animationRepeatCount = 0
@@ -58,54 +64,104 @@ class MakeVideoViewController: UIViewController {
         print ("=== done generate gif")
     }
     
-    func generateImagesFromBodyFeatures(bodyFeatures:[BodyFeature]) -> [UIImage] {
-        var resultImages:[UIImage] = []
+    func generateImagesFromBodyFeatures(bodyFeatures:[BodyFeature]) {
+        print ("=== get \(bodyFeatures.count) features")
         for oneFeature in bodyFeatures{
-            var photoData = oneFeature.photo
-//            photoData!.remove(at: (photoData?.startIndex)!)
+            let photoData = oneFeature.photo
             let imageData = NSData(base64Encoded: photoData!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
             let oneImage = UIImage(data: imageData! as Data)!
-            resultImages.append(oneImage)
+            self.imagesDictionary.updateValue(oneImage, forKey: String(oneFeature.photoID))
         }
-        print ("=== get \(resultImages.count) images")
-        return resultImages
+        print ("=== make \(self.imagesDictionary.count) images")
     }
     
-    func getAllBodyFeaturesBasedOnTimeSelected() -> [BodyFeature] {
+    
+    func getAllBodyFeaturesBasedOnTimeSelected() {
         print("=========start geting features========")
-        var bodyFeatures: [BodyFeature] = []
-////        let userID = (person?.user_id)!   ref.child("raspberry").child("member").child(String(userID)).child("data").queryOrdered(byChild: "created_date").queryLimited(toFirst: 11).observeSingleEvent(of: .value) { (snapShot) in
-//        let email = Auth.auth().currentUser?.email
-//        print ("email: \(email!)")
-//        ref.child("raspberry").child("member").queryOrdered(byChild: "email").queryEqual(toValue: email!).observeSingleEvent(of: .value) { (snapShot) in
-//            if let items = snapShot.value as? [String: AnyObject]{
-//                print ("======size: \(items.count)")
-//                for item in items{
-//                    print("=========geting one data========")
-//                    if let itemData = item.value["data"] as? [String: AnyObject]{
-//                        var bodyFeature: BodyFeature?
-//                        for oneData in itemData{
-//                            //print(oneData.value["create_date"])
-//                            let date = oneData.value["created_date"] as! Double
-//                            let photo = oneData.value["photo"] as! String
-//                            let height = oneData.value["height"] as! Double
-//                            let weight = oneData.value["wight"] as! Double
-//                            let photoID = oneData.value["photoID"] as! Int
-//                            let id = oneData.value["userID"] as! Int
-//                            bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
-//                            bodyFeatures.append(bodyFeature!)
-//                            print("=========get one feature========")
-//                        }
-//                    }
-//                }
-//            }
-//            else{
-//                print ("No items")
-//            }
-//        }
-        return (person?.data)!
+        //var bodyFeatures: [BodyFeature] = []
+        let userID = (person?.user_id)!
+        ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).child("data").queryOrdered(byChild: "created_date").observeSingleEvent(of: .value) { (snapShot) in
+            if let items = snapShot.value as? [String: AnyObject]{
+                print ("======size: \(items.count)")
+                for item in items{
+                    print("=========geting one data========")
+                    var bodyFeature: BodyFeature?
+                    //print(oneData.value["create_date"])
+                    let date = item.value["created_date"] as! Double
+                    let photo = item.value["photo"] as! String
+                    let height = item.value["height"] as! Double
+                    let weight = item.value["wight"] as! Double
+                    let photoID = item.value["photoID"] as! Int
+                    let id = item.value["userID"] as! Int
+                    bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
+                    self.bodyFeatures.append(bodyFeature!)
+                    print("=========get one feature========")
+                    print ("=========features size: \(self.bodyFeatures.count)")
+                }
+                print ("=========features size: \(self.bodyFeatures.count)")
+                self.generateImagesFromBodyFeatures(bodyFeatures: self.bodyFeatures)
+                self.generateGifFromImages(imagesDic: self.imagesDictionary)
+                self.saveImagesToPhone()
+                
+            }
+            }
     }
     
     
+    func saveImagesToPhone(){
+        print ("start storing picture to phone")
+        let documentURL = fileManager.urls(for:.documentDirectory, in:.userDomainMask).first!
+        let documentPath = documentURL.path
+        
+        for oneImage in imagesDictionary {
+            var alreadyStoredInPhone:Bool = false
+            let oneImageID = oneImage.key
+            let oneImageData = oneImage.value
+            //filter already stored image
+            do{
+                let filePath = documentURL.appendingPathComponent("\(oneImageID).png")
+                let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
+                for file in files{
+                    if "\(documentPath)/\(file)" == filePath.path{
+                        alreadyStoredInPhone = true
+                    }
+                }
+                if alreadyStoredInPhone == false{
+                    //store filtered unstored images
+                    do{
+                        if let imagePNGData = UIImagePNGRepresentation(oneImageData) {
+                            try imagePNGData.write(to: filePath, options: .atomic)
+                        }
+                    } catch {
+                        print ("cannot write image")
+                    }
+                }
+            } catch {
+                print ("!!! error when fileter images")
+            }
+        }
+        print ("finish storing picture to phone")
+
+    }
+
+    @IBAction func saveToLibrary(_ sender: AnyObject) {
+        for image in [UIImage](self.imagesDictionary.values) {
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            
+            let ac = UIAlertController(title: "Saved!", message: "The screenshot has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
     
 }

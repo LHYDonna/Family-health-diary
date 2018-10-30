@@ -9,6 +9,7 @@ target 'A3.b' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Charts'
+  pod 'BSImagePicker'
   # Pods for A3.b
 
   target 'A3.bTests' do

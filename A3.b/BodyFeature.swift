@@ -14,9 +14,9 @@ class BodyFeature: NSObject {
     var height: Double?
     var weight: Double?
     var photo: String?
-    var photoID: Int
+    var photoID: String?
     
-    init(user_id: Int?, dateTime: Double?, height: Double?, weight: Double?, photo: String?,photoID: Int){
+    init(user_id: Int?, dateTime: Double?, height: Double?, weight: Double?, photo: String?,photoID: String?){
         self.user_id = user_id;
         self.dateTime = dateTime
         self.height = height
@@ -31,7 +31,7 @@ class BodyFeature: NSObject {
         self.height = 0
         self.weight = 0
         self.photo = "default"
-        self.photoID = 0
+        self.photoID = "default"
     }
     
     func toString(){

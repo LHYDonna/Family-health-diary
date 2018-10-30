@@ -28,6 +28,10 @@
 		06F61520093E3C0773EC5F17 /* Pods_A3_bTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */; };
 		12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F70687217F22D4009DC136 /* GoogleService-Info.plist */; };
 		12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CDCD042173390000A7E02B /* CoreData.framework */; };
+		3309F03021880E590014BB0F /* ImageSelectedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F02F21880E590014BB0F /* ImageSelectedTableViewController.swift */; };
+		3309F03221880E780014BB0F /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F03121880E780014BB0F /* ImageCollectionViewController.swift */; };
+		3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F033218810650014BB0F /* ImageCollectionViewCell.swift */; };
+		3309F036218813DE0014BB0F /* ImageProcessingHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */; };
 		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
 		33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B892185890F00F5E29E /* Model.xcdatamodeld */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
@@ -80,6 +84,10 @@
 		0F796215C5590382BE9CC710 /* Pods_A3_b.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_b.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12F70687217F22D4009DC136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9341964414120DDE85D5F8 /* Pods-A3.bUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bUITests/Pods-A3.bUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3309F02F21880E590014BB0F /* ImageSelectedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectedTableViewController.swift; sourceTree = "<group>"; };
+		3309F03121880E780014BB0F /* ImageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewController.swift; sourceTree = "<group>"; };
+		3309F033218810650014BB0F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingHomeViewController.swift; sourceTree = "<group>"; };
 		33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeVideoViewController.swift; sourceTree = "<group>"; };
 		33B24B8A2185890F00F5E29E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		65E013667EB3FCC3F24A10B4 /* Pods-A3.bTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bTests/Pods-A3.bTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -165,6 +173,10 @@
 				12F70687217F22D4009DC136 /* GoogleService-Info.plist */,
 				33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */,
 				33B24B892185890F00F5E29E /* Model.xcdatamodeld */,
+				3309F02F21880E590014BB0F /* ImageSelectedTableViewController.swift */,
+				3309F03121880E780014BB0F /* ImageCollectionViewController.swift */,
+				3309F033218810650014BB0F /* ImageCollectionViewCell.swift */,
+				3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */,
 			);
 			path = A3.b;
 			sourceTree = "<group>";
@@ -368,6 +380,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-A3.b/Pods-A3.b-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BSGridCollectionViewLayout/BSGridCollectionViewLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -376,6 +391,9 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSGridCollectionViewLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImagePicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -434,7 +452,9 @@
 				03CDCCF42172F69D00A7E02B /* PersonalFileViewController.swift in Sources */,
 				33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */,
 				03CDCCE82172E65B00A7E02B /* LoginViewController.swift in Sources */,
+				3309F03021880E590014BB0F /* ImageSelectedTableViewController.swift in Sources */,
 				03CDCCEC2172F42A00A7E02B /* PasswordResetViewController.swift in Sources */,
+				3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */,
 				33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */,
 				03CDCCEA2172EA4400A7E02B /* RegisterViewController.swift in Sources */,
 				03CDCD02217316BE00A7E02B /* BodyFeature.swift in Sources */,
@@ -442,7 +462,9 @@
 				03CDCCF02172F4ED00A7E02B /* FamilyListTableViewController.swift in Sources */,
 				03CDCCB92172DC8800A7E02B /* ViewController.swift in Sources */,
 				03CDCCB72172DC8700A7E02B /* AppDelegate.swift in Sources */,
+				3309F036218813DE0014BB0F /* ImageProcessingHomeViewController.swift in Sources */,
 				03CDCCF82172FB3200A7E02B /* HeightChartViewController.swift in Sources */,
+				3309F03221880E780014BB0F /* ImageCollectionViewController.swift in Sources */,
 				03CDCCEE2172F45000A7E02B /* HomeViewController.swift in Sources */,
 				03CDCCF62172F84D00A7E02B /* TodayViewController.swift in Sources */,
 			);
