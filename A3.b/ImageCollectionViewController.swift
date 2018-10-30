@@ -8,87 +8,86 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
 class ImageCollectionViewController: UICollectionViewController {
-//
-//    private let reuseIdentifier = "imageCell"
-//    private let sectionInsets = UIEdgeInsets(top:50.0, left:20.0, bottom:50.0, right:20.0)
-//    private let itemsPerRow: CGFloat = 3
-//
-//    var animalInfoDelegate: AnimalInfoDelegate?
-//    var iconNameList = [String]()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        iconNameList = [String]()
-//        setIconNameList()
-//    }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//    }
-//
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//    }
-//
-//    //initial the icon list, using this can track all the icons saved in assets filefolder
-//    func setIconNameList(){
-//        self.iconNameList.append("default")
-//        self.iconNameList.append("bird")
-//        self.iconNameList.append("lion")
-//        self.iconNameList.append("cat")
-//        self.iconNameList.append("dog")
-//        self.iconNameList.append("elephant")
-//        self.iconNameList.append("horse")
-//        self.iconNameList.append("pig")
-//        self.iconNameList.append("rabbit")
-//        self.iconNameList.append("reindeer")
-//        self.iconNameList.append("rooster")
-//        self.iconNameList.append("snake")
-//    }
-//
-//
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-//
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return iconNameList.count
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! IconCollectionViewCell
-//        cell.backgroundColor = UIColor.white
-//        let animalIcon:String = iconNameList[indexPath.row]
-//        cell.imageView.image = UIImage(named:animalIcon.lowercased())
-//        return cell
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        animalInfoDelegate?.setIconName(iconNameList[indexPath.row])
-//        self.navigationController?.popViewController(animated: true)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-//        let availableWidth = view.frame.width - paddingSpace
-//        let widthPerItem = availableWidth / itemsPerRow
-//
-//        return CGSize(width:widthPerItem, height:widthPerItem)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//
+
+    private let reuseIdentifier = "imageCell"
+    private let sectionInsets = UIEdgeInsets(top:50.0, left:20.0, bottom:50.0, right:20.0)
+    private let itemsPerRow: CGFloat = 3
+
+    var storedImagesList:[String]?
+    var selectedImagesDelegate:SelectedImagesDelegate?
+    var imageTableDelegate:ImageTableViewDelegate?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    func getImageFromLocalStorage(imageID: String) -> UIImage{
+        let fileName = "\(imageID).png"
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        var image: UIImage?
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            let fileData = fileManager.contents(atPath: filePath)
+            image = UIImage(data: fileData!)
+        }
+        return image!
+    }
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return storedImagesList!.count
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ImageCollectionViewCell
+        //cell.backgroundColor = UIColor.white
+        cell.imageView.image = getImageFromLocalStorage(imageID: storedImagesList![indexPath.row])
+        return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedImagesDelegate?.addImage(imageID: storedImagesList![indexPath.row])
+        self.showMessage("Target image is added to the selected list, you can check it in the table list.", "Success!")
+        self.imageTableDelegate?.reloadTable()
+        self.selectedImagesDelegate?.generateAnimationFromSelectedImages()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+
+        return CGSize(width:widthPerItem, height:widthPerItem)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
+
+    func showMessage(_ message: String, _ title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
     
 }

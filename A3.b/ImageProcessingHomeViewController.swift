@@ -10,17 +10,26 @@ import UIKit
 import Firebase
 
 
-//protocol ImageProcessingHomeDelegate {
-//    func searchImage(imageID: String) -> UIImage
-//    func addImage(imageID: String) -> UIImage
-//    func removeImage(imageID: String) -> UIImage
-//
-//}
+protocol SelectedImagesDelegate {
+    func getBodyFeature(index: Int) -> BodyFeature?
+    func addImage(imageID: String)
+    //func removeImage(imageID: String) -> Int?
+    func removeImage(index: Int)
+    func getSelectedImages() -> [String]
+    func moveImage(fromIndex:Int, toIndex:Int)
+    func generateAnimationFromSelectedImages()
+}
 
-class ImageProcessingHomeViewController: UIViewController {
+class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegate{
+
+    @IBOutlet weak var animationView: UIImageView!
+    
+    
     
     var imageGoingToShow:[String:UIImage] = [String:UIImage]()
     var bodyFeatures:[BodyFeature] = []
+    var storedImageList:[String] = []
+    var selectedImages:[String] = []
     var ref = Database.database().reference()
     let fileManager = FileManager.default
     
@@ -29,86 +38,42 @@ class ImageProcessingHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        getAllBodyFeaturesWithoutImageData()
     }
-    
-    @IBAction func aa(_ sender: Any) {
-        self.bodyFeatures = getAllBodyFeaturesWithoutImageData()
-        getAllStoredImageName()
-    }
-    
-    func getUnstoredImage(imageID: String) -> UIImage{
-        let userID = (person!.user_id)!
-        var result:UIImage?
-    ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).child("data").child("photoID").queryEqual(toValue: imageID).observeSingleEvent(of: .value) { (snapShot) in
-        if let items = snapShot.value as? [String: AnyObject]{
-            for item in items{
-                print("=========geting one data========")
-                let photoData = item.value as! String
-                let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                result = UIImage(data: imageData! as Data)
-            }
-        }
-        }
-        return result!
-    }
-    
-    func saveImagesToLocal(imagesDictionary: [String:UIImage]) {
-        print ("=== start storing picture to phone")
-        let documentURL = fileManager.urls(for:.documentDirectory, in:.userDomainMask).first!
-        let documentPath = documentURL.path
+   
+    func checkAndRestoreUserFiles() {
+        //get locally stored images
+        self.storedImageList = getAllStoredImageName()
+        //compare bodyfeatures and userStoredFiles to find out unstored images
         
-        for oneImage in imagesDictionary {
-            var alreadyStoredInPhone:Bool = false
-            let oneImageID = oneImage.key
-            let oneImageData = oneImage.value
-            //filter already stored image
-            do{
-                let filePath = documentURL.appendingPathComponent("\(oneImageID).png")
-                let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
-                for file in files{
-                    if "\(documentPath)/\(file)" == filePath.path{
-                        alreadyStoredInPhone = true
-                    }
-                }
-                if alreadyStoredInPhone == false{
-                    //store filtered unstored images
-                    do{
-                        if let imagePNGData = UIImagePNGRepresentation(oneImageData) {
-                            try imagePNGData.write(to: filePath, options: .atomic)
-                        }
-                    } catch {
-                        print ("cannot write image")
-                    }
-                }
-            } catch {
-                print ("!!! error when fileter images")
-            }
+        print ("userStoredFiles.count = \(self.storedImageList.count)")
+        print ("bodyFeatures.count = \(self.bodyFeatures.count)")
+        print ("-------- user Stored Files: --------")
+        for id in self.storedImageList {
+            print (id)
         }
-        print ("finish storing picture to phone")
-    }
-    
-    func checkAndRestoreUserFiles(bodyFeatures: [BodyFeature], userStoredFiles: [String]) {
-        let userStoredFiles = getAllStoredImageName()
-        var unstoredFile:[String:UIImage] = [String:UIImage]()
-        self.bodyFeatures = getAllBodyFeaturesWithoutImageData()
+        
+//        var unstoredImages:[String:UIImage] = [String:UIImage]()
         for oneFeature in self.bodyFeatures{
             let photoID = oneFeature.photoID
-            if userStoredFiles.contains(photoID!){
-                print ("File: \(photoID) already exist" )
+            print ("--- Checking file: \(photoID!)")
+            if self.storedImageList.contains(photoID!){
+                print ("File: \(photoID!) already exist" )
             }else{
-                let unstoredImage = getUnstoredImage(imageID: photoID!)
-                unstoredFile.updateValue(unstoredImage, forKey: photoID!)
+                print ("saving File: \(photoID!) " )
+                getAndSaveUnstoredImageByImageID(imageID: photoID!)
             }
         }
-        saveImagesToLocal(imagesDictionary:unstoredFile)
+        
+        self.storedImageList = getAllStoredImageName()
+
     }
     
     func getAllStoredImageName() -> [String]{
         print ("====== geting storing picture from phone")
         let documentURL = fileManager.urls(for:.documentDirectory,in:.userDomainMask).first!
         let documentPath = documentURL.path
-        let userIdentifier = (person?.email)!
+        let userIdentifier = (String)((person?.user_id)!)
         var userStoredFiles:[String] = []
         do{
             let allStoredFiles = try fileManager.contentsOfDirectory(atPath: "\(documentPath)") as [String]
@@ -118,7 +83,7 @@ class ImageProcessingHomeViewController: UIViewController {
                     let fileIdentifier = file.split(separator: "-")[0]
                     if fileIdentifier == userIdentifier{
                         print ("-- user file found")
-                        userStoredFiles.append(file)
+                        userStoredFiles.append(String(file.split(separator: ".")[0]))
                     }else{
                         print ("-- invalid file")
                     }
@@ -129,20 +94,55 @@ class ImageProcessingHomeViewController: UIViewController {
         }
         return userStoredFiles
     }
-//
-//    func getImageFromFirebase(imageID:String)->UIImage{
-//        
-//    }
     
-    func getAllBodyFeaturesWithoutImageData() -> [BodyFeature]{
-        var bodyFeaturesGot:[BodyFeature] = []
+    func getAndSaveUnstoredImageByImageID(imageID: String){
+        let userID = (person!.user_id)!
+    ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).child("data").queryOrdered(byChild: "photoID").queryEqual(toValue: imageID).observeSingleEvent(of: .value) { (snapShot) in
+        print ("searching \(imageID) in 'data' document in firebase")
+        print ("\(snapShot.children.allObjects.count)")
+        if let items = snapShot.value as? [String: AnyObject]{
+            for item in items{
+                print("=== Geting image data with id: \(item.value["photoID"]!!) ===")
+                let photoData = item.value["photo"] as! String
+                let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                let oneImage = UIImage(data: imageData! as Data)
+                self.saveOneImageToLocal(imageName: imageID, image: oneImage!)
+            }
+        }
+        }
+    }
+    
+    func saveOneImageToLocal(imageName: String, image: UIImage) {
+        print ("=== start storing picture to phone")
+        let documentURL = fileManager.urls(for:.documentDirectory, in:.userDomainMask).first!
+        //let documentPath = documentURL.path
+        
+        //var alreadyStoredInPhone:Bool = false
+        //filter already stored image
+        do{
+            print ("\(imageName)")
+            let filePath = documentURL.appendingPathComponent("\(imageName).png")
+            if let imagePNGData = UIImagePNGRepresentation(image) {
+                try imagePNGData.write(to: filePath, options: .atomic)
+            }
+        } catch {
+            print ("!!! error when fileter images: \(error)")
+        }
+        print ("finish storing one picture to phone")
+    }
+    
+    
+    
+    func getAllBodyFeaturesWithoutImageData(){
+        self.bodyFeatures = []
         let userID = (person!.user_id)!
     ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).child("data").queryOrdered(byChild: "created_date").observeSingleEvent(of: .value) { (snapShot) in
+            print ("==== geting bodyFeatures from firebase0 ====")
             if let items = snapShot.value as? [String: AnyObject]{
+                print ("==== geting bodyFeatures from firebase1 ====")
                 for item in items{
                     print("=========geting one data========")
                     var bodyFeature: BodyFeature?
-                    print("created_date is: \(item.value["create_date"])")
                     let date = item.value["created_date"] as! Double
                     //let photo = item.value["photo"] as! String
                     let photo = "default"
@@ -151,26 +151,88 @@ class ImageProcessingHomeViewController: UIViewController {
                     let photoID = item.value["photoID"] as! String
                     let id = item.value["userID"] as! Int
                     bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
-                    bodyFeaturesGot.append(bodyFeature!)
+                    self.bodyFeatures.append(bodyFeature!)
                     print("=========got one feature========")
                 }
-                print ("=========features size: \(bodyFeaturesGot.count)")
+                print ("=========features size: \(self.bodyFeatures.count)")
             }
+        self.checkAndRestoreUserFiles()
+
         }
-        return bodyFeaturesGot
     }
     
-//    func loadImageRepository(parameters) -> return type {
-//        function body
-//    }
-//
+    // implement delegate method
+    func getBodyFeature(index: Int) -> BodyFeature? {
+        for feature in self.bodyFeatures{
+            if feature.photoID == selectedImages[index]{
+                return feature
+            }
+        }
+        return nil
+    }
     
+    func addImage(imageID: String) {
+        selectedImages.append(imageID)
+    }
+    
+//    func removeImage(imageID: String) -> Int? {
+//        var index:Int
+//        for i in 0..<selectedImages.count{
+//            if selectedImages[i] == imageID{
+//                selectedImages.remove(at: i)
+//                index = i
+//            }
+//        }
+//        return index
+//    }
+    
+    func removeImage(index: Int) {
+         selectedImages.remove(at: index)
+    }
 
+    
+    func getSelectedImages() -> [String] {
+        return self.selectedImages
+    }
+    
+    func moveImage(fromIndex: Int, toIndex: Int) {
+        let changedImage = selectedImages.remove(at: fromIndex)
+        selectedImages.insert(changedImage, at: toIndex)
+    }
 
+    func generateAnimationFromSelectedImages() {
+        var images:[UIImage] = []
+        for imageID in selectedImages{
+            images.append(getImageFromLocalStorage(imageID: imageID))
+        }
+        animationView.animationImages = images
+        animationView.animationDuration = 0.5
+        animationView.animationRepeatCount = 0
+        animationView.startAnimating()
+        print ("=== finished generating gif")
+    }
+    
+    func getImageFromLocalStorage(imageID: String) -> UIImage{
+        let fileName = "\(imageID).png"
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        var image: UIImage?
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            let fileData = fileManager.contents(atPath: filePath)
+            image = UIImage(data: fileData!)
+        }
+        return image!
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "selectedImages"{
+            let controller = segue.destination as! ImageSelectedTableViewController
+            controller.storedImagesList = self.getAllStoredImageName()
+            controller.bodyFeatures = self.bodyFeatures
+            controller.selectedImagesDelegate = self
+        }
     }
     
 

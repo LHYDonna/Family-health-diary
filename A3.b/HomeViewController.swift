@@ -61,7 +61,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                         var bodyFeature: BodyFeature?
                         for oneData in itemData{
                             let date = oneData.value["created_date"] as! Double
-                            let photo = oneData.value["photo"] as! String
+                            let photo = "kk"
                             let height = oneData.value["height"] as! Double
                             let weight = oneData.value["wight"] as! Double
                             let photoID = oneData.value["photoID"] as! String
