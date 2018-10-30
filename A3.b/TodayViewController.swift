@@ -38,19 +38,22 @@ class TodayViewController: UIViewController {
         weightLabel.text = "\(String(describing: todayFeature!.weight!))"
         
         
-        let string = todayFeature?.photo!
-        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-        todayImage.image = UIImage(data: imageData! as Data)!
+//        let string = todayFeature?.photo!
+//        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//        todayImage.image = UIImage(data: imageData! as Data)!
         
         showPortrait()
+        showPhoto()
     }
     
     func showPhoto(){
         let ref = Database.database().reference()
-        ref.child("RaspberryRepository").child((person!.raspberryID)!).child("member").child("\(person?.user_id)").child("data").queryOrdered(byChild: "created_date").queryLimited(toFirst: 1).observeSingleEvent(of: .value) { (snapShot) in
+        ref.child("RaspberryRepository").child((person!.raspberryID)!).child("member").child("\(String(describing: person!.user_id!))").child("data").queryOrdered(byChild: "created_date").queryLimited(toFirst: 1).observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
                 for item in items{
-                    
+                    let string = item.value["photo"] as? String
+                    let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                    self.todayImage.image = UIImage(data: imageData! as Data)!
                 }
             }
         }
@@ -70,13 +73,4 @@ class TodayViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
