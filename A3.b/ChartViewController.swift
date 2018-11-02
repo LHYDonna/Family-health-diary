@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
+class HeightChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
 
     //@IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
