@@ -8,6 +8,9 @@
 
 import UIKit
 import Firebase
+import SwiftGifOrigin
+import ImageIO
+import MobileCoreServices
 
 
 protocol SelectedImagesDelegate {
@@ -81,12 +84,23 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
                 for file in allStoredFiles{
                     print (file)
                     let fileIdentifier = file.split(separator: "-")[0]
-                    if fileIdentifier == userIdentifier{
-                        print ("-- user file found")
-                        userStoredFiles.append(String(file.split(separator: ".")[0]))
+                    if file.contains("."){
+                        let fileExtension = file.split(separator: ".")[1]
+                        if fileExtension == "png"{
+                            if fileIdentifier == userIdentifier{
+                                print ("-- user file found: \(file)")
+                                userStoredFiles.append(String(file.split(separator: ".")[0]))
+                            }else{
+                                print ("-- invalid file: \(file)")
+                            }
+                        }else{
+                            print ("-- invalid file: \(file)")
+                        }
                     }else{
-                        print ("-- invalid file")
+                        print ("-- invalid file: \(file)")
                     }
+                    
+                    
                 }
             }
         } catch {
@@ -224,6 +238,49 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
             image = UIImage(data: fileData!)
         }
         return image!
+    }
+    
+    func generateAndSaveGifWithExtension(photos: [UIImage], filename: String) -> Bool {
+        let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let path = documentsDirectoryPath.appending("/\(filename).gif")
+        print ("\(path)")
+        let fileProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]
+        let gifProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: 0.75]]
+        let cfURL = URL(fileURLWithPath: path) as CFURL
+        if let destination = CGImageDestinationCreateWithURL(cfURL, kUTTypeGIF, photos.count, nil) {
+            CGImageDestinationSetProperties(destination, fileProperties as CFDictionary?)
+            for photo in photos {
+                CGImageDestinationAddImage(destination, photo.cgImage!, gifProperties as CFDictionary?)
+            }
+            return CGImageDestinationFinalize(destination)
+        }
+        return false
+    }
+    
+    
+    @IBAction func saveBtnClicked(_ sender: Any) {
+        var images:[UIImage] = []
+        for imageID in selectedImages{
+            images.append(getImageFromLocalStorage(imageID: imageID))
+        }
+        let timeInterval = Int(Date().timeIntervalSince1970)
+        let fileName = "\((person?.user_id)!)-\(timeInterval)"
+        if self.generateAndSaveGifWithExtension(photos:images, filename:"\(fileName)"){
+            self.showMessage("Gif file is successfully generated. Check in GIF gallery.", "Success!")
+        }else{
+            self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
+        }
+//        if self.generateAndSaveGif(photos:images, filename:"\(String((person?.user_id)!))-\(timeInterval)"){
+//            self.showMessage("Gif file is successfully generated.", "Success!")
+//        }else{
+//            self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
+//        }
+    }
+    
+    func showMessage(_ message: String, _ title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
