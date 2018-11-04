@@ -17,7 +17,16 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var portraitImage: UIImageView!
+    @IBOutlet weak var frBtn: UIButton!
+    @IBOutlet weak var flBtn: UIButton!
+    @IBOutlet weak var epBtn: UIButton!
+    @IBOutlet weak var rdBtn: UIButton!
+    @IBOutlet weak var mvBtn: UIButton!
+    @IBOutlet weak var vcBtn: UIButton!
+    @IBOutlet weak var lgBtn: UIButton!
+    @IBOutlet weak var fgBtn: UIButton!
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var ref = Database.database().reference()
     var person: Person?
@@ -28,8 +37,22 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         super.viewDidLoad()
         fetchCurrentUser()
         setupActivityHandler()
-        
+        setUI()
+
         // Do any additional setup after loading the view.
+    }
+    
+    func setUI(){
+        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.layer.zPosition = -1
+        frBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        flBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        epBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        rdBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        mvBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        vcBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        lgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        fgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
     }
     
     func editPersonFile(person: Person) {

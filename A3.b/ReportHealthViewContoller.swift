@@ -14,6 +14,7 @@ class ReportHealthViewContoller: UIViewController {
 
     var person: Person?
     @IBOutlet weak var healthBarChartView: BarChartView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var ref = Database.database().reference().child("RaspberryRepository")
     var personList: [Person?] = []
@@ -22,6 +23,7 @@ class ReportHealthViewContoller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        backgroundImageView.image = UIImage.gif(name: "beach-gif")
         // Do any additional setup after loading the view.
     }
 

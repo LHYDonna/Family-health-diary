@@ -24,6 +24,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
     @IBOutlet weak var respberryTextfield: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var personList: [Person] = []
     var person_idList: [Int] = []
@@ -35,6 +36,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImageView.image = UIImage.gif(name: "beach-gif")
         //getAllPerson()
         // Do any additional setup after loading the view.
     }

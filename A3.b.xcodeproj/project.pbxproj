@@ -47,8 +47,7 @@
 		3309F048218BFFC00014BB0F /* GIFGalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F047218BFFC00014BB0F /* GIFGalleryController.swift */; };
 		3309F04A218DE5A60014BB0F /* plant-grow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F049218DE5A60014BB0F /* plant-grow.gif */; };
 		3309F04C218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */; };
-		3309F04E218EC5DE0014BB0F /* beach-gif2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F04D218EC5DE0014BB0F /* beach-gif2.gif */; };
-		3309F050218EC5E30014BB0F /* beach-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F04F218EC5E20014BB0F /* beach-gif.gif */; };
+		3309F04E218EC5DE0014BB0F /* beach-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F04D218EC5DE0014BB0F /* beach-gif.gif */; };
 		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
 		33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B892185890F00F5E29E /* Model.xcdatamodeld */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
@@ -120,8 +119,7 @@
 		3309F047218BFFC00014BB0F /* GIFGalleryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFGalleryController.swift; sourceTree = "<group>"; };
 		3309F049218DE5A60014BB0F /* plant-grow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "plant-grow.gif"; sourceTree = "<group>"; };
 		3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyGIFGalleryViewController.swift; sourceTree = "<group>"; };
-		3309F04D218EC5DE0014BB0F /* beach-gif2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "beach-gif2.gif"; sourceTree = "<group>"; };
-		3309F04F218EC5E20014BB0F /* beach-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "beach-gif.gif"; sourceTree = "<group>"; };
+		3309F04D218EC5DE0014BB0F /* beach-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "beach-gif.gif"; sourceTree = "<group>"; };
 		33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeVideoViewController.swift; sourceTree = "<group>"; };
 		33B24B8A2185890F00F5E29E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		65E013667EB3FCC3F24A10B4 /* Pods-A3.bTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bTests/Pods-A3.bTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,8 +188,7 @@
 			children = (
 				03CDCCB62172DC8700A7E02B /* AppDelegate.swift */,
 				03CDCCB82172DC8800A7E02B /* ViewController.swift */,
-				3309F04D218EC5DE0014BB0F /* beach-gif2.gif */,
-				3309F04F218EC5E20014BB0F /* beach-gif.gif */,
+				3309F04D218EC5DE0014BB0F /* beach-gif.gif */,
 				03CDCCBA2172DC8800A7E02B /* Main.storyboard */,
 				03CDCCC02172DC8A00A7E02B /* Assets.xcassets */,
 				3309F049218DE5A60014BB0F /* plant-grow.gif */,
@@ -383,12 +380,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3309F04E218EC5DE0014BB0F /* beach-gif2.gif in Resources */,
+				3309F04E218EC5DE0014BB0F /* beach-gif.gif in Resources */,
 				3309F04A218DE5A60014BB0F /* plant-grow.gif in Resources */,
 				03CDCCC42172DC8A00A7E02B /* LaunchScreen.storyboard in Resources */,
 				12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */,
 				03CDCCC12172DC8A00A7E02B /* Assets.xcassets in Resources */,
-				3309F050218EC5E30014BB0F /* beach-gif.gif in Resources */,
 				03CDCCBC2172DC8800A7E02B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
