@@ -51,6 +51,19 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         print ("--- generating GIF Cell using file: \(fileName)")
         cell.gifImage.image = self.getGIFFromLocalStorage(imageID: fileName)
         cell.gifDateLabel.text = "\(dateString)"
+        cell.gifImage.layer.masksToBounds = true
+        cell.gifImage.layer.borderWidth = 2.5
+        cell.gifImage.layer.borderColor = UIColor.green.cgColor
+        cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
+        if cell.isSelected {
+            
+        }else {
+            cell.gifImage.layer.masksToBounds = true
+            cell.gifImage.layer.borderWidth = 2.5
+            cell.gifImage.layer.borderColor = UIColor.green.cgColor
+            cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
+        }
+        
         return cell
     }
     
@@ -58,7 +71,25 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         let fileName = self.localGIFList[indexPath.row]
         self.selectedGif.image = self.getGIFFromLocalStorage(imageID: fileName)
         self.selectedGifID = fileName
+        let cell = collectionView.cellForItem(at: indexPath) as! GIFCollectionViewCell
+        cell.gifImage.layer.masksToBounds = true
+        cell.gifImage.layer.borderWidth = 2.5
+        cell.gifImage.layer.borderColor = UIColor.blue.cgColor
+        cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
+        cell.isSelected = true
+        
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GIFCollectionViewCell
+        cell.gifImage.layer.masksToBounds = true
+        cell.gifImage.layer.borderWidth = 2.5
+        cell.gifImage.layer.borderColor = UIColor.green.cgColor
+        cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
+        cell.isSelected = false
+        
+    }
+    
     
     @IBAction func saveToFamilyGalleryBtnClicked(_ sender: Any) {
 

@@ -17,7 +17,9 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
     var storedImagesList:[String]?
     var bodyFeatures:[BodyFeature]?
     var selectedImagesDelegate:SelectedImagesDelegate?
-    var reuseIdentifier = "imageTableViewCell"
+    
+    let SECTION_ITEM = 0
+    let SECTION_COUNT = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,31 +32,50 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (selectedImagesDelegate?.getSelectedImages().count)!
+        if (section == SECTION_COUNT)
+        {
+            return 1
+        }else{
+            return (selectedImagesDelegate?.getSelectedImages().count)!
+        }
     }
     
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ImageTableViewCell
-        let bodyFeature: BodyFeature = (self.selectedImagesDelegate?.getBodyFeature(index: indexPath.row))!
-        cell.bodyImageView.image = self.getImageFromLocalStorage(imageID: bodyFeature.photoID!)
-        cell.heightLabel.text = "\(bodyFeature.height!) cm"
-        cell.weightLabel.text = "\(bodyFeature.weight!) Kg"
-        let timeInterval = Double(bodyFeature.dateTime!)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = formatter.string(from: Date(timeIntervalSince1970: timeInterval))
-        cell.dataLabel.text = "\(dateString)"
+        var reuseIdentifier = "imageTableViewCell"
+        if indexPath.section == SECTION_COUNT {
+            reuseIdentifier = "countCell"
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        if indexPath.section == SECTION_ITEM {
+            let imageCell = cell as! ImageTableViewCell
+            let bodyFeature: BodyFeature = (self.selectedImagesDelegate?.getBodyFeature(index: indexPath.row))!
+            imageCell.bodyImageView.image = self.getImageFromLocalStorage(imageID: bodyFeature.photoID!)
+            imageCell.heightLabel.text = "\(Double(round(100*bodyFeature.height!)/100)) cm"
+            imageCell.weightLabel.text = "\(Double(round(100*bodyFeature.weight!)/100)) Kg"
+            imageCell.bodyImageView.layer.masksToBounds = true
+            imageCell.bodyImageView.layer.borderWidth = 1.5
+            imageCell.bodyImageView.layer.borderColor = UIColor.green.cgColor
+            imageCell.bodyImageView.layer.cornerRadius = imageCell.bodyImageView.bounds.width / 7
+            let timeInterval = Double(bodyFeature.dateTime!)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateString = formatter.string(from: Date(timeIntervalSince1970: timeInterval))
+            imageCell.dataLabel.text = "\(dateString)"
+        }else{
+            cell.textLabel?.text = "\((selectedImagesDelegate?.getSelectedImages().count)!) Images Selected"
+        }
         
         return cell
      }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 130
     }
     
     

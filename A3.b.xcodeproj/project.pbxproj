@@ -39,6 +39,7 @@
 		3309F044218BF7B30014BB0F /* GIFCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F043218BF7B30014BB0F /* GIFCollectionViewCell.swift */; };
 		3309F046218BF8140014BB0F /* GIFCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F045218BF8140014BB0F /* GIFCollectionViewController.swift */; };
 		3309F048218BFFC00014BB0F /* GIFGalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F047218BFFC00014BB0F /* GIFGalleryController.swift */; };
+		3309F04A218DE5A60014BB0F /* plant-grow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F049218DE5A60014BB0F /* plant-grow.gif */; };
 		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
 		33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B892185890F00F5E29E /* Model.xcdatamodeld */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
@@ -102,6 +103,7 @@
 		3309F043218BF7B30014BB0F /* GIFCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCollectionViewCell.swift; sourceTree = "<group>"; };
 		3309F045218BF8140014BB0F /* GIFCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCollectionViewController.swift; sourceTree = "<group>"; };
 		3309F047218BFFC00014BB0F /* GIFGalleryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFGalleryController.swift; sourceTree = "<group>"; };
+		3309F049218DE5A60014BB0F /* plant-grow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "plant-grow.gif"; sourceTree = "<group>"; };
 		33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeVideoViewController.swift; sourceTree = "<group>"; };
 		33B24B8A2185890F00F5E29E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		65E013667EB3FCC3F24A10B4 /* Pods-A3.bTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bTests/Pods-A3.bTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				03CDCCB82172DC8800A7E02B /* ViewController.swift */,
 				03CDCCBA2172DC8800A7E02B /* Main.storyboard */,
 				03CDCCC02172DC8A00A7E02B /* Assets.xcassets */,
+				3309F049218DE5A60014BB0F /* plant-grow.gif */,
 				03CDCCC22172DC8A00A7E02B /* LaunchScreen.storyboard */,
 				03CDCCC52172DC8A00A7E02B /* Info.plist */,
 				03CDCCE72172E65B00A7E02B /* LoginViewController.swift */,
@@ -353,6 +356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3309F04A218DE5A60014BB0F /* plant-grow.gif in Resources */,
 				03CDCCC42172DC8A00A7E02B /* LaunchScreen.storyboard in Resources */,
 				12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */,
 				03CDCCC12172DC8A00A7E02B /* Assets.xcassets in Resources */,

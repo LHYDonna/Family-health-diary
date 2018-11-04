@@ -23,11 +23,18 @@ protocol SelectedImagesDelegate {
     func generateAnimationFromSelectedImages()
 }
 
+extension UIImage {
+    public class func gif(asset: String) -> UIImage? {
+        if let asset = NSDataAsset(name: asset) {
+            return UIImage.gif(data: asset.data)
+        }
+        return nil
+    }
+}
+
 class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegate{
 
     @IBOutlet weak var animationView: UIImageView!
-    
-    
     
     var imageGoingToShow:[String:UIImage] = [String:UIImage]()
     var bodyFeatures:[BodyFeature] = []
@@ -36,12 +43,19 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     var ref = Database.database().reference()
     let fileManager = FileManager.default
     
+    let ANIMATION_DURATION = 1.0
+    
     var person:Person?
     var raspberryID:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getAllBodyFeaturesWithoutImageData()
+        animationView.image = UIImage.gif(name: "plant-grow")
+        animationView.layer.masksToBounds = true
+        animationView.layer.borderWidth = 1.5
+        animationView.layer.borderColor = UIColor.green.cgColor
+        animationView.layer.cornerRadius = animationView.bounds.width / 5
     }
    
     func checkAndRestoreUserFiles() {
@@ -220,7 +234,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
             images.append(getImageFromLocalStorage(imageID: imageID))
         }
         animationView.animationImages = images
-        animationView.animationDuration = 0.5
+        animationView.animationDuration = self.ANIMATION_DURATION
         animationView.animationRepeatCount = 0
         animationView.startAnimating()
         print ("=== finished generating gif")
@@ -245,7 +259,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         let path = documentsDirectoryPath.appending("/\(filename).gif")
         print ("\(path)")
         let fileProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]
-        let gifProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: 0.75]]
+        let gifProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: self.ANIMATION_DURATION]]
         let cfURL = URL(fileURLWithPath: path) as CFURL
         if let destination = CGImageDestinationCreateWithURL(cfURL, kUTTypeGIF, photos.count, nil) {
             CGImageDestinationSetProperties(destination, fileProperties as CFDictionary?)
@@ -259,22 +273,28 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
     
     @IBAction func saveBtnClicked(_ sender: Any) {
-        var images:[UIImage] = []
-        for imageID in selectedImages{
-            images.append(getImageFromLocalStorage(imageID: imageID))
-        }
-        let timeInterval = Int(Date().timeIntervalSince1970)
-        let fileName = "\((person?.user_id)!)-\(timeInterval)"
-        if self.generateAndSaveGifWithExtension(photos:images, filename:"\(fileName)"){
-            self.showMessage("Gif file is successfully generated. Check in GIF gallery.", "Success!")
+        if selectedImages.count <= 1{
+            self.showMessage("Please selected at least two images.", "Failed...")
         }else{
-            self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
+            var images:[UIImage] = []
+            for imageID in selectedImages{
+                images.append(getImageFromLocalStorage(imageID: imageID))
+            }
+            let timeInterval = Int(Date().timeIntervalSince1970)
+            let fileName = "\((person?.user_id)!)-\(timeInterval)"
+            if self.generateAndSaveGifWithExtension(photos:images, filename:"\(fileName)"){
+                self.showMessage("Gif file is successfully generated. Check in your GIF gallery.", "Success!")
+            }else{
+                self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
+            }
+            self.selectedImages = []
+            animationView.stopAnimating()
+            animationView.image = UIImage.gif(name: "plant-grow")
+            animationView.layer.masksToBounds = true
+            animationView.layer.borderWidth = 1.5
+            animationView.layer.borderColor = UIColor.green.cgColor
+            animationView.layer.cornerRadius = animationView.bounds.width / 5
         }
-//        if self.generateAndSaveGif(photos:images, filename:"\(String((person?.user_id)!))-\(timeInterval)"){
-//            self.showMessage("Gif file is successfully generated.", "Success!")
-//        }else{
-//            self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
-//        }
     }
     
     func showMessage(_ message: String, _ title: String) {
@@ -294,3 +314,5 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
 
 }
+
+
