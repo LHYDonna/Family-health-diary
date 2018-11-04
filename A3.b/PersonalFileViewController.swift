@@ -21,13 +21,18 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var sexSegment: UISegmentedControl!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var background: UIImageView!
     
     var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
+        
         // Do any additional setup after loading the view.
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
     }
 
     override func didReceiveMemoryWarning() {

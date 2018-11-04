@@ -11,10 +11,11 @@ import Firebase
 
 class PasswordResetViewController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backgroundImageView.image = UIImage.gif(name: "beach-gif")
         // Do any additional setup after loading the view.
     }
 

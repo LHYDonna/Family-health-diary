@@ -18,6 +18,7 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var unknownCollection: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var background: UIImageView!
     
     var person:Person?
     var raspberryID:String?
@@ -29,6 +30,10 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         self.getUnknownImageFromFirebase()
         self.setupActivityHandler()
         // Do any additional setup after loading the view.
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
+        self.unknownCollection.backgroundColor = .clear
     }
     
     

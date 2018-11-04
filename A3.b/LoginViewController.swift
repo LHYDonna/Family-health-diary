@@ -21,8 +21,7 @@ class LoginViewController: UIViewController {
     // set email and password icon to the left of the textfiled
     override func viewDidLoad() {
         super.viewDidLoad()
-        addLeftImageToTextField(emailTextField,UIImage(named: "email")!)
-        addLeftImageToTextField(passwordTextField,UIImage(named: "password")!)
+        setUI()
         // Do any additional setup after loading the view.
     }
     
@@ -46,6 +45,12 @@ class LoginViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
+    // set textfiled icon UI
+    func setUI(){
+        addLeftImageToTextField(emailTextField,UIImage(named: "email")!)
+        addLeftImageToTextField(passwordTextField,UIImage(named: "password")!)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

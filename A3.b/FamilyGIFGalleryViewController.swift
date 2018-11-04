@@ -13,6 +13,7 @@ import MobileCoreServices
 
 class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var backgroudImageView: UIImageView!
     
     let reuseIdentifier = "familyGIFCell"
     let fileManager = FileManager.default
@@ -28,8 +29,10 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroudImageView.image = UIImage.gif(name: "beach-gif")
         self.getAllSharedGifFromFirebase()
         self.setupActivityHandler()
+        self.collectionView.backgroundColor = .clear
         // Do any additional setup after loading the view.
     }
     
@@ -103,11 +106,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destination.
      // Pass the selected object to the new view controller.
-        if segue.identifier == "chooseUnknowImageSegue"{
-            let controller = segue.destination as! UnknownImageViewController
-            controller.person = person
-            controller.raspberryID = raspberryID
-        }
+        
      }
     
 }

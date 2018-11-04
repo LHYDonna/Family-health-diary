@@ -93,7 +93,7 @@ class FamilyListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print ("--- table view is loading")
         let cell = tableView.dequeueReusableCell(withIdentifier: "personCell", for: indexPath) as! PersonTableViewCell
-        
+        cell.backgroundColor = .clear
         let person: Person = self.personList[indexPath.row]
         cell.nameLabel.text = person.name
       
@@ -115,13 +115,13 @@ class FamilyListTableViewController: UITableViewController {
         
             cell.heightLabel.text = "\(String(describing: featureData!.height!))"
             cell.weightLabel.text = "\(String(describing: featureData!.weight!))"
-        
-        cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/YYYY"
+            cell.dateLabel.text = formatter.string(from: Date(timeIntervalSince1970: (featureData?.dateTime)!))
         }
         else{
             cell.heightLabel.text = person.height
             cell.weightLabel.text = person.weight
-            
             cell.dateLabel.text = "NOT TAKEN YET"
         }
         return cell
@@ -129,7 +129,7 @@ class FamilyListTableViewController: UITableViewController {
     
     // Define the height of the cell
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 150
     }
     
     

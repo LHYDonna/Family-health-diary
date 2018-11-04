@@ -16,6 +16,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var heightView: UIImageView!
     @IBOutlet weak var weightView: UIImageView!
+    @IBOutlet weak var background: UIImageView!
     
     //var showPersonDelegate: ManagePersonProtocol?
     var person: Person?
@@ -37,6 +38,10 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChartViewController.imageTapped(gesture:)))
         heightView.addGestureRecognizer(tapGesture)
         heightView.isUserInteractionEnabled = true
+        
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
     }
     
     @objc func imageTapped(gesture: UIGestureRecognizer) {

@@ -49,10 +49,10 @@
 		3309F04C218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */; };
 		3309F052218ECB310014BB0F /* beach-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F051218ECB300014BB0F /* beach-gif.gif */; };
 		3309F054218EDD270014BB0F /* UnknownImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F053218EDD270014BB0F /* UnknownImageViewController.swift */; };
+		33295D14218F048E0036E77E /* Pods_A3_b.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
 		33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B892185890F00F5E29E /* Model.xcdatamodeld */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
-		F1F6827E65B1EE878677646B /* Pods_A3_b.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +71,20 @@
 			remoteInfo = A3.b;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		33295D15218F048E0036E77E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				33295D14218F048E0036E77E /* Pods_A3_b.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03CDCCB32172DC8700A7E02B /* A3.b.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A3.b.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,7 +154,6 @@
 			files = (
 				3309F0402188AF880014BB0F /* MobileCoreServices.framework in Frameworks */,
 				12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */,
-				F1F6827E65B1EE878677646B /* Pods_A3_b.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +300,7 @@
 				03CDCCB02172DC8700A7E02B /* Frameworks */,
 				03CDCCB12172DC8700A7E02B /* Resources */,
 				5DC0392DD75A5D2E11B91893 /* [CP] Embed Pods Frameworks */,
+				33295D15218F048E0036E77E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
