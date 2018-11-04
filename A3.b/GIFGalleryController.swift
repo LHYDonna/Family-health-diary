@@ -19,6 +19,8 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
     var ref = Database.database().reference()
 
     @IBOutlet weak var selectedGif: UIImageView!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var gifCollectionView: UICollectionView!
     var selectedGifID:String?
     
     var person:Person?
@@ -31,6 +33,10 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         super.viewDidLoad()
         self.localGIFList = self.getAllStoredGifName()
         // Do any additional setup after loading the view.
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
+        self.gifCollectionView.backgroundColor = .clear
     }
     
     
@@ -73,23 +79,31 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         if let gifID = self.selectedGifID{
             let created_date = gifID.split(separator: "-")[1]
             let gifImage = (selectedGif.image)!
-            let gifData = UIImagePNGRepresentation(gifImage)!
-            let gif_data64 = gifData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
-            print ("searching \(gifID) in 'data' document in firebase")
-            let key = ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").childByAutoId().key
-            let post = ["created_date": created_date,
-                        "personID": (person?.user_id)!,
-                        "gifID": gifID,
-                        "gif_data": gif_data64] as [String : Any]
-            let childUpdates = ["/\(key!)": post]
-            ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").updateChildValues(childUpdates)
-            self.showMessage("Submitt to family GIF repository.", "Suceess!")
+            
+            let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            let gifURL = documentsDirectoryPath.appending("/\(gifID).gif")
+            do {
+                let gifData = try Data(contentsOf: URL(fileURLWithPath: gifURL))
+               
+                print (URL(fileURLWithPath: gifURL).absoluteString)
+
+                let gif_data64 = gifData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+                print ("searching \(gifID) in 'data' document in firebase")
+                let key = ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").childByAutoId().key
+                let post = ["created_date": created_date,
+                            "personID": (person?.user_id)!,
+                            "gifID": gifID,
+                            "gif_data": gif_data64] as [String : Any]
+                let childUpdates = ["/\(key!)": post]
+                ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").updateChildValues(childUpdates)
+                self.showMessage("Submitt to family GIF repository.", "Suceess!")
+            }catch {
+                print ("failed to get gif")
+            }
         }else{
             self.showMessage("Please select a GIF first.", "Warning")
         }
 
-        
-        
     }
     
     

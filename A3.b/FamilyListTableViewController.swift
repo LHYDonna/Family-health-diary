@@ -9,16 +9,26 @@
 import UIKit
 import Firebase
 
+protocol UserSelectingDelegate{
+    func setSelectedUser(user: Person)
+}
+
 class FamilyListTableViewController: UITableViewController {
 
     var person: Person?
     var personList: [Person] = []
     var personCell: PersonTableViewCell?
     var ref = Database.database().reference().child("RaspberryRepository")
+    var chooseModel:Bool = false
+    var userSelectingDelegate:UserSelectingDelegate?
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        self.setupActivityHandler()
     }
 
 
@@ -69,12 +79,16 @@ class FamilyListTableViewController: UITableViewController {
                     let person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, raspberryID: raspberry, data: bodyData)
                     self.personList.append(person)
                 }
-               self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.tableView.reloadData()
             }
         }
         
         
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print ("--- table view is loading")
@@ -118,6 +132,25 @@ class FamilyListTableViewController: UITableViewController {
         return 200
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if chooseModel {
+            self.userSelectingDelegate?.setSelectedUser(user: personList[indexPath.row])
+            _ = navigationController?.popViewController(animated: true)
+        }else{
+        }
+    }
+    
+    
+    func setupActivityHandler()
+    {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+    }
 
     /*
     // Override to support conditional editing of the table view.

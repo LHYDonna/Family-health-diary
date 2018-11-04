@@ -35,6 +35,7 @@ extension UIImage {
 class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegate{
 
     @IBOutlet weak var animationView: UIImageView!
+    @IBOutlet weak var background: UIImageView!
     
     var imageGoingToShow:[String:UIImage] = [String:UIImage]()
     var bodyFeatures:[BodyFeature] = []
@@ -42,6 +43,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     var selectedImages:[String] = []
     var ref = Database.database().reference()
     let fileManager = FileManager.default
+     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     let ANIMATION_DURATION = 1.0
     
@@ -50,13 +52,19 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self
-        getAllBodyFeaturesWithoutImageData()
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
+        
         animationView.image = UIImage.gif(name: "plant-grow")
         animationView.layer.masksToBounds = true
         animationView.layer.borderWidth = 1.5
         animationView.layer.borderColor = UIColor.green.cgColor
         animationView.layer.cornerRadius = animationView.bounds.width / 5
+        
+        self.getAllBodyFeaturesWithoutImageData()
+        self.setupActivityHandler()
+        
     }
    
     func checkAndRestoreUserFiles() {
@@ -186,7 +194,8 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
                 print ("=========features size: \(self.bodyFeatures.count)")
             }
         self.checkAndRestoreUserFiles()
-
+        self.activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
     
@@ -302,6 +311,16 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func setupActivityHandler()
+    {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

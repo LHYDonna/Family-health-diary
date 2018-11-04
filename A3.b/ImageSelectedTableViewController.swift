@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SwiftGifOrigin
+import ImageIO
+import MobileCoreServices
 
 protocol ImageTableViewDelegate {
     func reloadTable()
@@ -23,7 +26,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.backgroundView = UIImageView(image: UIImage.gif(name: "beach-gif"))
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -52,6 +55,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        cell.backgroundColor = .clear
         if indexPath.section == SECTION_ITEM {
             let imageCell = cell as! ImageTableViewCell
             let bodyFeature: BodyFeature = (self.selectedImagesDelegate?.getBodyFeature(index: indexPath.row))!

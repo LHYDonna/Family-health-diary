@@ -22,14 +22,10 @@ class GIFCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
+        self.collectionView!.backgroundView = UIImageView(image: UIImage.gif(name: "beach-gif"))
+        
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        // Do any additional setup after loading the view.
         self.localGIFList = self.getAllStoredGifName()
     }
 
@@ -58,7 +54,7 @@ class GIFCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GIFCollectionViewCell
-    
+        cell.backgroundColor = .clear
         // Configure the cell
         let fileName = self.localGIFList[indexPath.row]
         let timeInterval = Double(fileName.split(separator: "-")[1])

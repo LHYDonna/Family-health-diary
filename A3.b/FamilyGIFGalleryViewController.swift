@@ -44,7 +44,6 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
         // Configure the cell
         let gifString = self.firebaseGIFList[indexPath.row]
-        print (gifString)
         cell.gifImage.image = UIImage.gif(data: NSData(base64Encoded: gifString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)! as Data)
         cell.gifImage.layer.masksToBounds = true
         cell.gifImage.layer.borderWidth = 2.5
@@ -53,6 +52,8 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
         return cell
     }
+    
+    
     
     func getAllSharedGifFromFirebase(){
         self.firebaseGIFList = []
@@ -98,14 +99,15 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
 
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destination.
      // Pass the selected object to the new view controller.
+        if segue.identifier == "chooseUnknowImageSegue"{
+            let controller = segue.destination as! UnknownImageViewController
+            controller.person = person
+            controller.raspberryID = raspberryID
+        }
      }
-     */
     
 }
