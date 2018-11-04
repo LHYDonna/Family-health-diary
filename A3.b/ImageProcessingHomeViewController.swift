@@ -50,6 +50,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self
         getAllBodyFeaturesWithoutImageData()
         animationView.image = UIImage.gif(name: "plant-grow")
         animationView.layer.masksToBounds = true
