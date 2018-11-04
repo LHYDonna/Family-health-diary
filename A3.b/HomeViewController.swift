@@ -156,6 +156,12 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             let controller = segue.destination as! FamilyReportViewController
             controller.person = person
         }
+        if segue.identifier == "gifGallerySegue"{
+            let controller = segue.destination as! GifGalleryController
+            controller.person = person
+            controller.raspberryID = raspberryID
+        }
+        
     }
 
 

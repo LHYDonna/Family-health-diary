@@ -8,6 +8,9 @@
 
 import UIKit
 import Firebase
+import SwiftGifOrigin
+import ImageIO
+import MobileCoreServices
 
 
 protocol SelectedImagesDelegate {
@@ -20,11 +23,18 @@ protocol SelectedImagesDelegate {
     func generateAnimationFromSelectedImages()
 }
 
+extension UIImage {
+    public class func gif(asset: String) -> UIImage? {
+        if let asset = NSDataAsset(name: asset) {
+            return UIImage.gif(data: asset.data)
+        }
+        return nil
+    }
+}
+
 class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegate{
 
     @IBOutlet weak var animationView: UIImageView!
-    
-    
     
     var imageGoingToShow:[String:UIImage] = [String:UIImage]()
     var bodyFeatures:[BodyFeature] = []
@@ -33,12 +43,19 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     var ref = Database.database().reference()
     let fileManager = FileManager.default
     
+    let ANIMATION_DURATION = 1.0
+    
     var person:Person?
     var raspberryID:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getAllBodyFeaturesWithoutImageData()
+        animationView.image = UIImage.gif(name: "plant-grow")
+        animationView.layer.masksToBounds = true
+        animationView.layer.borderWidth = 1.5
+        animationView.layer.borderColor = UIColor.green.cgColor
+        animationView.layer.cornerRadius = animationView.bounds.width / 5
     }
    
     func checkAndRestoreUserFiles() {
@@ -81,12 +98,23 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
                 for file in allStoredFiles{
                     print (file)
                     let fileIdentifier = file.split(separator: "-")[0]
-                    if fileIdentifier == userIdentifier{
-                        print ("-- user file found")
-                        userStoredFiles.append(String(file.split(separator: ".")[0]))
+                    if file.contains("."){
+                        let fileExtension = file.split(separator: ".")[1]
+                        if fileExtension == "png"{
+                            if fileIdentifier == userIdentifier{
+                                print ("-- user file found: \(file)")
+                                userStoredFiles.append(String(file.split(separator: ".")[0]))
+                            }else{
+                                print ("-- invalid file: \(file)")
+                            }
+                        }else{
+                            print ("-- invalid file: \(file)")
+                        }
                     }else{
-                        print ("-- invalid file")
+                        print ("-- invalid file: \(file)")
                     }
+                    
+                    
                 }
             }
         } catch {
@@ -206,7 +234,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
             images.append(getImageFromLocalStorage(imageID: imageID))
         }
         animationView.animationImages = images
-        animationView.animationDuration = 0.5
+        animationView.animationDuration = self.ANIMATION_DURATION
         animationView.animationRepeatCount = 0
         animationView.startAnimating()
         print ("=== finished generating gif")
@@ -226,6 +254,55 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         return image!
     }
     
+    func generateAndSaveGifWithExtension(photos: [UIImage], filename: String) -> Bool {
+        let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let path = documentsDirectoryPath.appending("/\(filename).gif")
+        print ("\(path)")
+        let fileProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]
+        let gifProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: self.ANIMATION_DURATION]]
+        let cfURL = URL(fileURLWithPath: path) as CFURL
+        if let destination = CGImageDestinationCreateWithURL(cfURL, kUTTypeGIF, photos.count, nil) {
+            CGImageDestinationSetProperties(destination, fileProperties as CFDictionary?)
+            for photo in photos {
+                CGImageDestinationAddImage(destination, photo.cgImage!, gifProperties as CFDictionary?)
+            }
+            return CGImageDestinationFinalize(destination)
+        }
+        return false
+    }
+    
+    
+    @IBAction func saveBtnClicked(_ sender: Any) {
+        if selectedImages.count <= 1{
+            self.showMessage("Please selected at least two images.", "Failed...")
+        }else{
+            var images:[UIImage] = []
+            for imageID in selectedImages{
+                images.append(getImageFromLocalStorage(imageID: imageID))
+            }
+            let timeInterval = Int(Date().timeIntervalSince1970)
+            let fileName = "\((person?.user_id)!)-\(timeInterval)"
+            if self.generateAndSaveGifWithExtension(photos:images, filename:"\(fileName)"){
+                self.showMessage("Gif file is successfully generated. Check in your GIF gallery.", "Success!")
+            }else{
+                self.showMessage("Failed to generate Gif file, please try again.", "Failed...")
+            }
+            self.selectedImages = []
+            animationView.stopAnimating()
+            animationView.image = UIImage.gif(name: "plant-grow")
+            animationView.layer.masksToBounds = true
+            animationView.layer.borderWidth = 1.5
+            animationView.layer.borderColor = UIColor.green.cgColor
+            animationView.layer.cornerRadius = animationView.bounds.width / 5
+        }
+    }
+    
+    func showMessage(_ message: String, _ title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectedImages"{
             let controller = segue.destination as! ImageSelectedTableViewController
@@ -237,3 +314,5 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
 
 }
+
+

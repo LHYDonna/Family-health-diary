@@ -12,7 +12,7 @@ class ImageCollectionViewController: UICollectionViewController {
 
     private let reuseIdentifier = "imageCell"
     private let sectionInsets = UIEdgeInsets(top:50.0, left:20.0, bottom:50.0, right:20.0)
-    private let itemsPerRow: CGFloat = 3
+    private let itemsPerRow: CGFloat = 2
 
     var storedImagesList:[String]?
     var selectedImagesDelegate:SelectedImagesDelegate?
@@ -58,12 +58,16 @@ class ImageCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ImageCollectionViewCell
         //cell.backgroundColor = UIColor.white
         cell.imageView.image = getImageFromLocalStorage(imageID: storedImagesList![indexPath.row])
+        cell.imageView.layer.masksToBounds = true
+        cell.imageView.layer.borderWidth = 2.0
+        cell.imageView.layer.borderColor = UIColor.green.cgColor
+        cell.imageView.layer.cornerRadius = cell.imageView.bounds.width / 7
         return cell
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedImagesDelegate?.addImage(imageID: storedImagesList![indexPath.row])
-        self.showMessage("Target image is added to the selected list, you can check it in the table list.", "Success!")
+        self.showMessage("One image is added to the selected list, you can check it in the table list.", "Success!")
         self.imageTableDelegate?.reloadTable()
         self.selectedImagesDelegate?.generateAnimationFromSelectedImages()
     }
