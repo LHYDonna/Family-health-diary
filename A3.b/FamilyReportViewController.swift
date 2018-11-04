@@ -25,6 +25,10 @@ class FamilyReportViewController: UITabBarController {
             if let reportHealthViewController = viewController as? ReportHealthViewContoller{
                 reportHealthViewController.person = person
             }
+            if let familyGIFGalleryViewController = viewController as? FamilyGIFGalleryViewController{
+                familyGIFGalleryViewController.person = person
+                familyGIFGalleryViewController.raspberryID = (person?.raspberryID)!
+            }
         }
         // Do any additional setup after loading the view.
     }

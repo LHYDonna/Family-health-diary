@@ -55,15 +55,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         cell.gifImage.layer.borderWidth = 2.5
         cell.gifImage.layer.borderColor = UIColor.green.cgColor
         cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
-        if cell.isSelected {
-            
-        }else {
-            cell.gifImage.layer.masksToBounds = true
-            cell.gifImage.layer.borderWidth = 2.5
-            cell.gifImage.layer.borderColor = UIColor.green.cgColor
-            cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
-        }
-        
+    
         return cell
     }
     
@@ -72,21 +64,6 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         self.selectedGif.image = self.getGIFFromLocalStorage(imageID: fileName)
         self.selectedGifID = fileName
         let cell = collectionView.cellForItem(at: indexPath) as! GIFCollectionViewCell
-        cell.gifImage.layer.masksToBounds = true
-        cell.gifImage.layer.borderWidth = 2.5
-        cell.gifImage.layer.borderColor = UIColor.blue.cgColor
-        cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
-        cell.isSelected = true
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! GIFCollectionViewCell
-        cell.gifImage.layer.masksToBounds = true
-        cell.gifImage.layer.borderWidth = 2.5
-        cell.gifImage.layer.borderColor = UIColor.green.cgColor
-        cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
-        cell.isSelected = false
         
     }
     
@@ -104,7 +81,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
                         "personID": (person?.user_id)!,
                         "gifID": gifID,
                         "gif_data": gif_data64] as [String : Any]
-            let childUpdates = ["/\(key)": post]
+            let childUpdates = ["/\(key!)": post]
             ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").updateChildValues(childUpdates)
             self.showMessage("Submitt to family GIF repository.", "Suceess!")
         }else{
