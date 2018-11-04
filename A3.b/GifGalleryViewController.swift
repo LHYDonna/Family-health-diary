@@ -20,7 +20,7 @@ class GifGalleryViewController: UIViewController {
         
     }
     
-    
+    // show gif
     @IBAction func showGIF(_ sender: Any) {
         let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let gifURL = documentsDirectoryPath.appending("/testGIF.gif")
@@ -30,7 +30,7 @@ class GifGalleryViewController: UIViewController {
         
     }
     
-    
+    // show messages function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))

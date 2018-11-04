@@ -32,6 +32,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         backgroudImageView.image = UIImage.gif(name: "beach-gif")
         self.getAllSharedGifFromFirebase()
         self.setupActivityHandler()
+        self.collectionView.backgroundColor = .clear
         // Do any additional setup after loading the view.
     }
     
@@ -46,7 +47,6 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
         // Configure the cell
         let gifString = self.firebaseGIFList[indexPath.row]
-        print (gifString)
         cell.gifImage.image = UIImage.gif(data: NSData(base64Encoded: gifString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)! as Data)
         cell.gifImage.layer.masksToBounds = true
         cell.gifImage.layer.borderWidth = 2.5
@@ -55,6 +55,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
         return cell
     }
+    
     
     func getAllSharedGifFromFirebase(){
         self.firebaseGIFList = []
@@ -80,7 +81,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
     }
 
-    
+    // show messages function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
@@ -100,14 +101,11 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
 
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destination.
      // Pass the selected object to the new view controller.
+        
      }
-     */
     
 }

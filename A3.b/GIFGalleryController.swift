@@ -19,6 +19,8 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
     var ref = Database.database().reference()
 
     @IBOutlet weak var selectedGif: UIImageView!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var gifCollectionView: UICollectionView!
     var selectedGifID:String?
     
     var person:Person?
@@ -27,10 +29,15 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
     var localGIFList:[String] = []
     var firebaseGIFList:[String] = []
     
+    // set initail images and values
     override func viewDidLoad() {
         super.viewDidLoad()
         self.localGIFList = self.getAllStoredGifName()
         // Do any additional setup after loading the view.
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
+        self.gifCollectionView.backgroundColor = .clear
     }
     
     
@@ -39,6 +46,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
 
     }
     
+    // set image data to each cell og the collection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GIFCollectionViewCell
         
@@ -59,6 +67,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
+    // select item function
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let fileName = self.localGIFList[indexPath.row]
         self.selectedGif.image = self.getGIFFromLocalStorage(imageID: fileName)
@@ -67,32 +76,40 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    
+    // save gif image to the firebase
     @IBAction func saveToFamilyGalleryBtnClicked(_ sender: Any) {
 
         if let gifID = self.selectedGifID{
             let created_date = gifID.split(separator: "-")[1]
             let gifImage = (selectedGif.image)!
-            let gifData = UIImagePNGRepresentation(gifImage)!
-            let gif_data64 = gifData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
-            print ("searching \(gifID) in 'data' document in firebase")
-            let key = ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").childByAutoId().key
-            let post = ["created_date": created_date,
-                        "personID": (person?.user_id)!,
-                        "gifID": gifID,
-                        "gif_data": gif_data64] as [String : Any]
-            let childUpdates = ["/\(key!)": post]
-            ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").updateChildValues(childUpdates)
-            self.showMessage("Submitt to family GIF repository.", "Suceess!")
+            
+            let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            let gifURL = documentsDirectoryPath.appending("/\(gifID).gif")
+            do {
+                let gifData = try Data(contentsOf: URL(fileURLWithPath: gifURL))
+               
+                print (URL(fileURLWithPath: gifURL).absoluteString)
+
+                let gif_data64 = gifData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+                print ("searching \(gifID) in 'data' document in firebase")
+                let key = ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").childByAutoId().key
+                let post = ["created_date": created_date,
+                            "personID": (person?.user_id)!,
+                            "gifID": gifID,
+                            "gif_data": gif_data64] as [String : Any]
+                let childUpdates = ["/\(key!)": post]
+                ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").updateChildValues(childUpdates)
+                self.showMessage("Submitt to family GIF repository.", "Suceess!")
+            }catch {
+                print ("failed to get gif")
+            }
         }else{
             self.showMessage("Please select a GIF first.", "Warning")
         }
 
-        
-        
     }
     
-    
+    // get all the gif name stored in loacl storage
     func getAllStoredGifName() -> [String]{
         print ("====== geting storing GIF from phone")
         let documentURL = fileManager.urls(for:.documentDirectory,in:.userDomainMask).first!
@@ -130,7 +147,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return userStoredFiles
     }
     
-    
+    // get gif from local storage
     func getGIFFromLocalStorage(imageID: String) -> UIImage{
         print ("--- generating a gif image!!")
         let fileName = "\(imageID).gif"
@@ -141,21 +158,12 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return gifViewImage!
     }
     
+    // show messages function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

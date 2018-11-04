@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "A3.b/GIFCollectionViewController.swift"
-            timestampString = "563004537.8709199"
+            timestampString = "563012098.601561"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "getAllStoredGifName()"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,13 +26,91 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "A3.b/FamilyGIFGalleryViewController.swift"
-            timestampString = "563004537.8710639"
+            timestampString = "563021179.048548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
             landmarkName = "FamilyGIFGalleryViewController"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "A3.b/GIFGalleryController.swift"
+            timestampString = "563013212.357163"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "GifGalleryController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.GifGalleryController.person.getter : Swift.Optional&lt;A3_b.Person&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangdonglin/Desktop/Family-health-diary/A3.b/GIFGalleryController.swift"
+                  timestampString = "563013213.458221"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "114">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.GifGalleryController.person.setter : Swift.Optional&lt;A3_b.Person&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangdonglin/Desktop/Family-health-diary/A3.b/GIFGalleryController.swift"
+                  timestampString = "563013213.46284"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.GifGalleryController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; A3_b.GifGalleryController"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangdonglin/Desktop/Family-health-diary/A3.b/GIFGalleryController.swift"
+                  timestampString = "563013213.465341"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "756">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.GifGalleryController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;A3_b.GifGalleryController&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangdonglin/Desktop/Family-health-diary/A3.b/GIFGalleryController.swift"
+                  timestampString = "563013213.467957"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "730">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

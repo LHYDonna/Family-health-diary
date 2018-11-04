@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import Charts
 
+// extension UiImage class, a new method to resize the images
+// retrieved from youtube
 extension UIImage {
     class func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
         UIGraphicsBeginImageContext(size)
@@ -39,8 +41,6 @@ class ReportBMIViewController: UIViewController {
         loadData()
         backgroundImageView.image = UIImage.gif(name: "beach-gif")
         backgroundImageView.layer.zPosition = -1
-        //lineChartAdult.backgroundColor = UIColor(patternImage: UIImage(named: "AdultBMI")!)
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +48,7 @@ class ReportBMIViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // load fimaly data from firebase
     func loadData(){
         ref.child(person!.raspberryID!).child("member").observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
@@ -87,6 +88,7 @@ class ReportBMIViewController: UIViewController {
         }
     }
     
+    // bmi cauculate, append the calculated data to 2 lists, one for adult and one for child
     func BMICalculator(){
         for person in personList{
             let height = (Double(person!.height!)!/100) * 6
@@ -110,6 +112,7 @@ class ReportBMIViewController: UIViewController {
         print(bmiFigureAdult.count)
     }
     
+    //  set circle images
     func getPortraitImage(_ string: String?) -> UIImage{
         var newString = string
         if (newString!.elementsEqual("Default")){
@@ -186,16 +189,5 @@ class ReportBMIViewController: UIViewController {
         CBMIImageView.alpha = 0.5
         
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -19,6 +19,7 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var heightView: UIView!
     @IBOutlet weak var weightView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var background: UIImageView!
     
     var showPersonDelegate: ManagePersonProtocol?
     var person: Person?
@@ -34,6 +35,10 @@ class TodayViewController: UIViewController {
         weightView.layer.borderColor = UIColor.cyan.cgColor
         weightView.layer.cornerRadius = weightView.bounds.width/7
         // Do any additional setup after loading the view.
+        
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
     }
 
     override func didReceiveMemoryWarning() {

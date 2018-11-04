@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIImageView{
-    
+    // round image function
     func roundedImage() {
         self.layer.borderWidth = 2
         self.layer.borderColor = UIColor.white.cgColor

@@ -9,19 +9,28 @@
 import UIKit
 import Firebase
 
+protocol UserSelectingDelegate{
+    func setSelectedUser(user: Person)
+}
+
 class FamilyListTableViewController: UITableViewController {
 
     var person: Person?
     var personList: [Person] = []
     var personCell: PersonTableViewCell?
     var ref = Database.database().reference().child("RaspberryRepository")
+    var chooseModel:Bool = false
+    var userSelectingDelegate:UserSelectingDelegate?
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+
+    // initial page
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        self.setupActivityHandler()
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,6 +46,7 @@ class FamilyListTableViewController: UITableViewController {
         return personList.count
     }
 
+    // load family mumber data from the firebase based on raspberryID
     func loadData(){
         ref.child(person!.raspberryID!).child("member").observeSingleEvent(of: .value) { (snapShot) in
             if let items = snapShot.value as? [String: AnyObject]{
@@ -69,17 +79,20 @@ class FamilyListTableViewController: UITableViewController {
                     let person = Person(user_id: userID, email: email, name: name, password: password, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight, raspberryID: raspberry, data: bodyData)
                     self.personList.append(person)
                 }
-               self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.tableView.reloadData()
             }
         }
         
         
     }
     
+    // set value to each cells in the table view controller
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print ("--- table view is loading")
         let cell = tableView.dequeueReusableCell(withIdentifier: "personCell", for: indexPath) as! PersonTableViewCell
-        
+        cell.backgroundColor = .clear
         let person: Person = self.personList[indexPath.row]
         cell.nameLabel.text = person.name
       
@@ -118,50 +131,24 @@ class FamilyListTableViewController: UITableViewController {
         return 150
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if chooseModel {
+            self.userSelectingDelegate?.setSelectedUser(user: personList[indexPath.row])
+            _ = navigationController?.popViewController(animated: true)
+        }else{
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    // set up activity handler
+    func setupActivityHandler()
+    {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -20,6 +20,7 @@ class ImageCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView?.backgroundView = UIImageView(image: UIImage.gif(name: "beach-gif"))
     }
 
     override func didReceiveMemoryWarning() {

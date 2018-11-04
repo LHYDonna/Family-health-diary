@@ -21,13 +21,16 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var sexSegment: UISegmentedControl!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var background: UIImageView!
     
     var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
-        // Do any additional setup after loading the view.
+        self.background.image =  UIImage.gif(name: "beach-gif")
+        background.contentMode = .scaleToFill
+        self.background.layer.zPosition = -1
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,16 +38,14 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         // Dispose of any resources that can be recreated.
     }
     
+    // touch blank places get rid of the keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    // show data on the page
     func showData(){
         nameTextField.text = person?.name
-//        var string = person?.portrait!
-//        string!.remove(at: (string?.startIndex)!)
-//        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-//        portraitImage.image = UIImage(data: imageData! as Data)!
         showPortrait()
         heightTextField.text = person?.height
         weightTextField.text = person?.weight
@@ -60,6 +61,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         datePicker.date = Date.init(timeIntervalSince1970: (person?.dob)!)
     }
     
+    //show portrait image
     func showPortrait(){
         var string = person?.portrait!
         if (string!.elementsEqual("Default")){
@@ -74,6 +76,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
 
+    // choose sex from the segment
     @IBAction func segmentSelectBtn(_ sender: Any) {
         switch sexSegment.selectedSegmentIndex
         {
@@ -86,6 +89,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    // update the latest height and weight to the textfield
     @IBAction func updateFigureBtn(_ sender: Any) {
         nameTextField.text = person?.name
         let todayFeature = person?.data.last
@@ -93,6 +97,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         weightTextField.text = "\(String(describing: todayFeature!.weight!))"
     }
     
+    // pick a portrait picture from local storage
     @IBAction func portraitPickerLocal(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -103,6 +108,8 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
             //
         }
     }
+    
+    // take a picture using camera
     @IBAction func portraitPickerTake(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -114,6 +121,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    // pick image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
             portraitImage.image = image
@@ -125,12 +133,15 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         self.dismiss(animated: true, completion: nil)
     }
     
+    // update person data to the firebase
     @IBAction func updateFileBtn(_ sender: Any) {
         updatePerson()
         ref.child("RaspberryRepository").child((person?.raspberryID)!).child("member").child("\(String(describing: person!.user_id!))").updateChildValues(["name" : nameTextField.text,                                                                 "portrait" : person?.portrait, "height": heightTextField.text,"weight": weightTextField.text,"gender": gender,"dob": person?.dob])
         editpersonDelegate?.editPersonFile(person: person!)
     }
     
+    // renew person data to person object
+    // do the validation first
     func updatePerson(){
         let validation: Validation? = Validation()
         if !(validation?.checkNameValid(nameTextField.text!))!{
@@ -166,14 +177,5 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         self.present(alert, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
