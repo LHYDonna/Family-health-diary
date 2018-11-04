@@ -11,6 +11,8 @@ import UIKit
 extension UIImageView{
     
     func roundedImage() {
+        self.layer.borderWidth = 2
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = self.frame.size.width/2
         self.clipsToBounds = true
     }

@@ -16,13 +16,23 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var todayImage: UIImageView!
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
+    @IBOutlet weak var heightView: UIView!
+    @IBOutlet weak var weightView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
     
     var showPersonDelegate: ManagePersonProtocol?
     var person: Person?
     
+    // set heightView and weightView Border
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
+        heightView.layer.borderWidth = 2
+        heightView.layer.borderColor = UIColor.cyan.cgColor
+        heightView.layer.cornerRadius = heightView.bounds.width/7
+        weightView.layer.borderWidth = 2
+        weightView.layer.borderColor = UIColor.cyan.cgColor
+        weightView.layer.cornerRadius = weightView.bounds.width/7
         // Do any additional setup after loading the view.
     }
 
@@ -31,21 +41,34 @@ class TodayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // get data to display
     func showData(){
         nameLabel.text = person?.name
         let todayFeature = person?.data.last
-        heightLabel.text = "\(String(describing: todayFeature!.height!))"
+        heightLabel.text = "\(String(describing: Double(round(todayFeature!.height! * 100) / 100)))"
         weightLabel.text = "\(String(describing: todayFeature!.weight!))"
-        
-        
-//        let string = todayFeature?.photo!
-//        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-//        todayImage.image = UIImage(data: imageData! as Data)!
-        
+        let timeGap = getPhotoTimeGap()
+        if (timeGap <= 1.0){
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH24:MM"
+            dateLabel.text = formatter.string(from: Date(timeIntervalSince1970: (person?.data.first?.dateTime!)!))
+        }
+        if (timeGap <= 7.0){
+            dateLabel.text = "Took within 7 days"
+        }
+        if(timeGap <= 14.0){
+            dateLabel.text = "Took one week ago"
+        }
+        else{
+            let formatter = DateFormatter()
+            formatter.dateFormat = "DD/MM/YYYY"
+            dateLabel.text = formatter.string(from: Date(timeIntervalSince1970: (person?.data.first?.dateTime!)!))
+        }
         showPortrait()
         showPhoto()
     }
     
+    // get recent photo from firebase
     func showPhoto(){
         let ref = Database.database().reference()
         ref.child("RaspberryRepository").child((person!.raspberryID)!).child("member").child("\(String(describing: person!.user_id!))").child("data").queryOrdered(byChild: "created_date").queryLimited(toFirst: 1).observeSingleEvent(of: .value) { (snapShot) in
@@ -54,11 +77,13 @@ class TodayViewController: UIViewController {
                     let string = item.value["photo"] as? String
                     let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                     self.todayImage.image = UIImage(data: imageData! as Data)!
+
                 }
             }
         }
     }
 
+    // get portriat data and convert it to image from person object
     func showPortrait(){
         var string = person?.portrait!
         if (string!.elementsEqual("Default")){
@@ -70,7 +95,15 @@ class TodayViewController: UIViewController {
             }
             let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
             portraitImage.image = UIImage(data: imageData! as Data)!
+            portraitImage.roundedImage()
         }
+    }
+    
+    // get recent photo taken time from person object
+    func getPhotoTimeGap() -> Double{
+        let currentInterval = Date().timeIntervalSince1970
+        let timeGap = (currentInterval - (person?.data.first?.dateTime)!)/1000/60/60/24
+        return timeGap
     }
     
 }

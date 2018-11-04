@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "A3.b/ChartViewController.swift"
-            timestampString = "562941313.4905109"
+            timestampString = "563006688.4746571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "A3.b/LoginViewController.swift"
-            timestampString = "562994561.363902"
+            timestampString = "563004735.282582"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
@@ -109,6 +109,84 @@
                   startingLineNumber = "15"
                   endingLineNumber = "15"
                   offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "A3.b/TodayViewController.swift"
+            timestampString = "563007228.920028"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "TodayViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.TodayViewController.todayImage.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIImageView&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/hlin0005/Desktop/A3_b0/A3.b/TodayViewController.swift"
+                  timestampString = "563004876.015038"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.TodayViewController.todayImage.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIImageView&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/hlin0005/Desktop/A3_b0/A3.b/TodayViewController.swift"
+                  timestampString = "563004876.0170259"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.TodayViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; A3_b.TodayViewController"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/hlin0005/Desktop/A3_b0/A3.b/TodayViewController.swift"
+                  timestampString = "563004876.018558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "304">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A3_b.TodayViewController.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;A3_b.TodayViewController&gt;"
+                  moduleName = "A3.b"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/hlin0005/Desktop/A3_b0/A3.b/TodayViewController.swift"
+                  timestampString = "563004876.0202529"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "260">
                </Location>
             </Locations>
          </BreakpointContent>

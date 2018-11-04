@@ -101,13 +101,13 @@ class FamilyListTableViewController: UITableViewController {
         
             cell.heightLabel.text = "\(String(describing: featureData!.height!))"
             cell.weightLabel.text = "\(String(describing: featureData!.weight!))"
-        
-        cell.dateLabel.text = Date.init(timeIntervalSince1970: (featureData?.dateTime)!).description
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/YYYY"
+            cell.dateLabel.text = formatter.string(from: Date(timeIntervalSince1970: (featureData?.dateTime)!))
         }
         else{
             cell.heightLabel.text = person.height
             cell.weightLabel.text = person.weight
-            
             cell.dateLabel.text = "NOT TAKEN YET"
         }
         return cell
