@@ -93,6 +93,7 @@ class FamilyListTableViewController: UITableViewController {
             }
             let imageData = NSData(base64Encoded: string, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
             cell.portraitImage.image = UIImage(data: imageData! as Data)!
+            cell.portraitImage.roundedImage()
         }
         
         if (person.data.count != 0){

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PersonalFileViewController: UIViewController {
+class PersonalFileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var editpersonDelegate: ManagePersonProtocol?
     var person: Person?
@@ -22,7 +22,7 @@ class PersonalFileViewController: UIViewController {
     @IBOutlet weak var sexSegment: UISegmentedControl!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    var ref = Database.database().reference().child("assignment3-2bbc1")
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +35,17 @@ class PersonalFileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func showData(){
         nameTextField.text = person?.name
-        var string = person?.portrait!
-        string!.remove(at: (string?.startIndex)!)
-        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-        portraitImage.image = UIImage(data: imageData! as Data)!
+//        var string = person?.portrait!
+//        string!.remove(at: (string?.startIndex)!)
+//        let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//        portraitImage.image = UIImage(data: imageData! as Data)!
+        showPortrait()
         heightTextField.text = person?.height
         weightTextField.text = person?.weight
         var genderIndex: Int
@@ -55,7 +60,20 @@ class PersonalFileViewController: UIViewController {
         datePicker.date = Date.init(timeIntervalSince1970: (person?.dob)!)
     }
     
-    
+    func showPortrait(){
+        var string = person?.portrait!
+        if (string!.elementsEqual("Default")){
+            portraitImage.image = UIImage.init(named: "default")
+        }
+        else{
+            if (string!.first == "b"){
+                string!.remove(at: (string?.startIndex)!)
+            }
+            let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+            portraitImage.image = UIImage(data: imageData! as Data)!
+        }
+    }
+
     @IBAction func segmentSelectBtn(_ sender: Any) {
         switch sexSegment.selectedSegmentIndex
         {
@@ -75,18 +93,77 @@ class PersonalFileViewController: UIViewController {
         weightTextField.text = "\(String(describing: todayFeature!.weight!))"
     }
     
+    @IBAction func portraitPickerLocal(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+
+        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        picker.allowsEditing = false
+        self.present(picker, animated: true){
+            //
+        }
+    }
+    @IBAction func portraitPickerTake(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        
+        picker.sourceType = UIImagePickerControllerSourceType.camera
+        picker.allowsEditing = false
+        self.present(picker, animated: true){
+            //
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            portraitImage.image = image
+            //print(strBase64)
+        }
+        else{
+            // Error Message
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func updateFileBtn(_ sender: Any) {
         updatePerson()
-        ref.child("raspberry").child("member").child("\(String(describing: person!.user_id!))").updateChildValues(["name" : nameTextField.text,                                                                 "height": heightTextField.text,"weight": weightTextField.text,"gender": gender,"dob": person?.dob])
+        ref.child("RaspberryRepository").child((person?.raspberryID)!).child("member").child("\(String(describing: person!.user_id!))").updateChildValues(["name" : nameTextField.text,                                                                 "portrait" : person?.portrait, "height": heightTextField.text,"weight": weightTextField.text,"gender": gender,"dob": person?.dob])
         editpersonDelegate?.editPersonFile(person: person!)
     }
     
     func updatePerson(){
-        person?.name = nameTextField.text
-        person?.height = heightTextField.text
-        person?.weight = weightTextField.text
-        person?.gender = gender
-        person?.dob = datePicker.date.timeIntervalSince1970
+        let validation: Validation? = Validation()
+        if !(validation?.checkNameValid(nameTextField.text!))!{
+            createAltert(title: "Invalid Name", message: "Input a valid name please!")
+            return
+        }
+        if !(validation?.checkNumberValid(heightTextField.text!))!{
+            createAltert(title: "Invalid Height", message: "Input a valid number please!")
+            return
+        }
+        if !(validation?.checkNumberValid(weightTextField.text!))!{
+            createAltert(title: "Invalid Weight", message: "Input a valid number please!")
+            return
+        }
+        else{
+            person?.name = nameTextField.text
+            let imageData:Data = UIImagePNGRepresentation(portraitImage.image!)!
+            let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+            person?.portrait = strBase64
+            person?.height = heightTextField.text
+            person?.weight = weightTextField.text
+            person?.gender = gender
+            person?.dob = datePicker.date.timeIntervalSince1970
+        }
+    }
+    
+    // Create alert
+    func createAltert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     /*

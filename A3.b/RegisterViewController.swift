@@ -11,7 +11,7 @@ import Firebase
 //import CoreData
 //import FirebaseAuth
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -29,13 +29,13 @@ class RegisterViewController: UIViewController {
     var person_idList: [Int] = []
     var gender = "Male"
     
-    var ref = Database.database().reference().child("assignment3-2bbc1")
+    var ref = Database.database().reference()
     //var handle: DatabaseHandle?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getAllPerson()
+        //getAllPerson()
         // Do any additional setup after loading the view.
     }
 
@@ -44,13 +44,31 @@ class RegisterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func getAllPerson(){
-        
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
-    @IBAction func uploadPhotoBtn(_ sender: Any) {
+    @IBAction func portraitPickerLocal(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
         
+        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        picker.allowsEditing = false
+        self.present(picker, animated: true){
+            //
+        }
     }
+    @IBAction func portraitPickerTake(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        
+        picker.sourceType = UIImagePickerControllerSourceType.camera
+        picker.allowsEditing = false
+        self.present(picker, animated: true){
+            //
+        }
+    }
+    
     
     @IBAction func indexChangedSeg(_ sender: Any) {
         switch genderSegment.selectedSegmentIndex
@@ -67,7 +85,12 @@ class RegisterViewController: UIViewController {
     @IBAction func registerBtn(_ sender: Any) {
         let raspberryID = respberryTextfield.text
         let name = nameTextField.text
-        let portrait = "Default"
+        var portrait = "Default"
+        if photoImageView.image != nil {
+            let imageData:Data = UIImagePNGRepresentation(photoImageView.image!)!
+            let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+            portrait = strBase64
+        }
         let dob = datePicker.date.timeIntervalSince1970
         let email = emailTextfield.text
         let password = passwordTextField.text
@@ -75,35 +98,71 @@ class RegisterViewController: UIViewController {
         let height = heightTextField.text
         let weight = weightTextField.text
         let userID = generateId()
-        let person = Person(user_id: userID, email: email, name: password,password: name, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight,raspberryID: raspberryID, data: [])
-        person.toString()
-        personList.append(person)
-        person_idList.append(person.user_id!)
-        Auth.auth().createUser(withEmail: email!, password: password!) { (authResult, error) in
-            if error != nil{
-                self.displayErrorMessage(error!.localizedDescription)
-            }
-        }
-        let personData = ["userID": userID,
-                          "name": name,
-                          "portrait": portrait,
-                          "dob": dob,
-                          "email": email,
-                          "password": password,
-                          "registerDate": registerDate,
-                          "height": height,
-                          "weight": weight,
-                          "gender": gender,
-                          "raspberryID": raspberryID,
-                          "data": []] as [String : Any]
         
-        self.ref.child(raspberryID!).child("member").child(String(userID)).setValue(personData)
+        let validation: Validation? = Validation()
+        if !(validation?.checkNameValid(name!))!{
+            createAltert(title: "Invalid Name", message: "Input a valid name please!")
+            return
+        }
+        if !(validation?.checkRaspberryIDValid(raspberryID!))!{
+            createAltert(title: "Invalid ID", message: "Input a valid raspberryID please!")
+            return
+        }
+        if !(validation?.checkNumberValid(height!))!{
+            createAltert(title: "Invalid Height", message: "Input a valid number please!")
+            return
+        }
+        if !(validation?.checkNumberValid(weight!))!{
+            createAltert(title: "Invalid Weight", message: "Input a valid number please!")
+            return
+        }
+        else{
+            print("Pass Test")
+            let person = Person(user_id: userID, email: email, name: password,password: name, dob: dob,  portrait: portrait, gender: gender, registerDate: registerDate, height: height, weight: weight,raspberryID: raspberryID, data: [])
+            person.toString()
+            personList.append(person)
+            person_idList.append(person.user_id!)
+            Auth.auth().createUser(withEmail: email!, password: password!) { (authResult, error) in
+                if error != nil{
+                    self.displayErrorMessage(error!.localizedDescription)
+                }
+            }
+            let personData = ["userID": userID,
+                              "name": name,
+                              "portrait": portrait,
+                              "dob": dob,
+                              "email": email,
+                              "password": password,
+                              "registerDate": registerDate,
+                              "height": height,
+                              "weight": weight,
+                              "gender": gender,
+                              "raspberryID": raspberryID,
+                              "data": []] as [String : Any]
+            let matchData = [ "email": email,
+                              "raspberryID": raspberryID] as [String : Any]
+            self.ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).setValue(personData)
+            self.ref.child("RaspberryMatchTable").childByAutoId().setValue(matchData)
+        }
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
+        self.present(newViewController, animated: true, completion: nil)
     }
     
     func displayErrorMessage(_ errorMessage: String?){
         let allertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
         allertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(allertController,animated: true, completion: nil)
+    }
+    
+    // Create alert
+    func createAltert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func generateId() -> Int{

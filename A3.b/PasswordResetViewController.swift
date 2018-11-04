@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class PasswordResetViewController: UIViewController {
 
+    @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +23,24 @@ class PasswordResetViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func sendEmailBtn(_ sender: Any) {
+        Auth.auth().sendPasswordReset(withEmail: emailTextField.text!){error in
+            if let error = error {
+                self.displayErrorMessage(error.localizedDescription)
+            } else {
+                let allertController = UIAlertController(title: "Info", message: "Email Sent", preferredStyle: UIAlertControllerStyle.alert)
+                allertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+                self.present(allertController,animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func displayErrorMessage(_ errorMessage: String?){
+        let allertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+        allertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        self.present(allertController,animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

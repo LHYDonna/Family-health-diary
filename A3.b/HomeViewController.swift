@@ -22,10 +22,13 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     var ref = Database.database().reference()
     var person: Person?
     var raspberryID: String?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCurrentUser()
+        setupActivityHandler()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -38,6 +41,16 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setupActivityHandler()
+    {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     func fetchCurrentUser(){
@@ -75,7 +88,10 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
                     print(bodyData.count)
                     self.namelabel.text = self.person?.name
                     self.showPortrait()
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
+                self.person?.data = (self.person?.data.sorted{Int($0.dateTime!) > Int($1.dateTime!)})!
             }
         }
     }
@@ -91,10 +107,23 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             }
             let imageData = NSData(base64Encoded: string!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
             portraitImage.image = UIImage(data: imageData! as Data)!
+            portraitImage.roundedImage()
         }
     }
 
-
+    @IBAction func signoutBtn(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
+            self.present(newViewController, animated: true, completion: nil)
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -115,8 +144,16 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             controller.person = person
             controller.raspberryID = raspberryID
         }
+        if segue.identifier == "chartSegue"{
+            let controller = segue.destination as! ChartViewController
+            controller.person = person
+        }
         if segue.identifier == "familySegue"{
             let controller = segue.destination as! FamilyListTableViewController
+            controller.person = person
+        }
+        if segue.identifier == "familyReportSegue"{
+            let controller = segue.destination as! FamilyReportViewController
             controller.person = person
         }
     }

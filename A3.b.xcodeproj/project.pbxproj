@@ -22,9 +22,15 @@
 		03CDCCF22172F5FB00A7E02B /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCF12172F5FB00A7E02B /* PersonTableViewCell.swift */; };
 		03CDCCF42172F69D00A7E02B /* PersonalFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCF32172F69D00A7E02B /* PersonalFileViewController.swift */; };
 		03CDCCF62172F84D00A7E02B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCF52172F84D00A7E02B /* TodayViewController.swift */; };
-		03CDCCF82172FB3200A7E02B /* HeightChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCF72172FB3200A7E02B /* HeightChartViewController.swift */; };
+		03CDCCF82172FB3200A7E02B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCF72172FB3200A7E02B /* ChartViewController.swift */; };
 		03CDCD002173167B00A7E02B /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCCFF2173167B00A7E02B /* Person.swift */; };
 		03CDCD02217316BE00A7E02B /* BodyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCD01217316BE00A7E02B /* BodyFeature.swift */; };
+		03FA5DA9218D271400480F73 /* FamilyReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DA8218D271400480F73 /* FamilyReportViewController.swift */; };
+		03FA5DAB218D275E00480F73 /* ReportBMIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DAA218D275E00480F73 /* ReportBMIViewController.swift */; };
+		03FA5DAD218D279400480F73 /* ReportHealthViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DAC218D279400480F73 /* ReportHealthViewContoller.swift */; };
+		03FA5DB1218D5C4300480F73 /* Figure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DB0218D5C4300480F73 /* Figure.swift */; };
+		03FA5DB5218DCF6100480F73 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DB4218DCF6100480F73 /* UIImageView.swift */; };
+		03FA5DB7218DE72400480F73 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DB6218DE72400480F73 /* Validation.swift */; };
 		06F61520093E3C0773EC5F17 /* Pods_A3_bTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */; };
 		12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F70687217F22D4009DC136 /* GoogleService-Info.plist */; };
 		12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CDCD042173390000A7E02B /* CoreData.framework */; };
@@ -78,10 +84,16 @@
 		03CDCCF12172F5FB00A7E02B /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		03CDCCF32172F69D00A7E02B /* PersonalFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalFileViewController.swift; sourceTree = "<group>"; };
 		03CDCCF52172F84D00A7E02B /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
-		03CDCCF72172FB3200A7E02B /* HeightChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightChartViewController.swift; sourceTree = "<group>"; };
+		03CDCCF72172FB3200A7E02B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		03CDCCFF2173167B00A7E02B /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		03CDCD01217316BE00A7E02B /* BodyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyFeature.swift; sourceTree = "<group>"; };
 		03CDCD042173390000A7E02B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		03FA5DA8218D271400480F73 /* FamilyReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyReportViewController.swift; sourceTree = "<group>"; };
+		03FA5DAA218D275E00480F73 /* ReportBMIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBMIViewController.swift; sourceTree = "<group>"; };
+		03FA5DAC218D279400480F73 /* ReportHealthViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportHealthViewContoller.swift; sourceTree = "<group>"; };
+		03FA5DB0218D5C4300480F73 /* Figure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Figure.swift; sourceTree = "<group>"; };
+		03FA5DB4218DCF6100480F73 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		03FA5DB6218DE72400480F73 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		0F796215C5590382BE9CC710 /* Pods_A3_b.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_b.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12F70687217F22D4009DC136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9341964414120DDE85D5F8 /* Pods-A3.bUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bUITests/Pods-A3.bUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -169,7 +181,7 @@
 				03CDCCF12172F5FB00A7E02B /* PersonTableViewCell.swift */,
 				03CDCCF32172F69D00A7E02B /* PersonalFileViewController.swift */,
 				03CDCCF52172F84D00A7E02B /* TodayViewController.swift */,
-				03CDCCF72172FB3200A7E02B /* HeightChartViewController.swift */,
+				03CDCCF72172FB3200A7E02B /* ChartViewController.swift */,
 				03CDCCFF2173167B00A7E02B /* Person.swift */,
 				03CDCD01217316BE00A7E02B /* BodyFeature.swift */,
 				12F70687217F22D4009DC136 /* GoogleService-Info.plist */,
@@ -180,6 +192,12 @@
 				3309F033218810650014BB0F /* ImageCollectionViewCell.swift */,
 				3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */,
 				3309F03921887F0D0014BB0F /* ImageTableViewCell.swift */,
+				03FA5DA8218D271400480F73 /* FamilyReportViewController.swift */,
+				03FA5DAA218D275E00480F73 /* ReportBMIViewController.swift */,
+				03FA5DAC218D279400480F73 /* ReportHealthViewContoller.swift */,
+				03FA5DB0218D5C4300480F73 /* Figure.swift */,
+				03FA5DB4218DCF6100480F73 /* UIImageView.swift */,
+				03FA5DB6218DE72400480F73 /* Validation.swift */,
 			);
 			path = A3.b;
 			sourceTree = "<group>";
@@ -446,10 +464,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03CDCD002173167B00A7E02B /* Person.swift in Sources */,
+				03FA5DAB218D275E00480F73 /* ReportBMIViewController.swift in Sources */,
 				03CDCCF42172F69D00A7E02B /* PersonalFileViewController.swift in Sources */,
 				33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */,
+				03FA5DB7218DE72400480F73 /* Validation.swift in Sources */,
 				03CDCCE82172E65B00A7E02B /* LoginViewController.swift in Sources */,
 				3309F03021880E590014BB0F /* ImageSelectedTableViewController.swift in Sources */,
+				03FA5DB5218DCF6100480F73 /* UIImageView.swift in Sources */,
 				03CDCCEC2172F42A00A7E02B /* PasswordResetViewController.swift in Sources */,
 				3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */,
 				33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */,
@@ -460,9 +481,12 @@
 				03CDCCB92172DC8800A7E02B /* ViewController.swift in Sources */,
 				03CDCCB72172DC8700A7E02B /* AppDelegate.swift in Sources */,
 				3309F036218813DE0014BB0F /* ImageProcessingHomeViewController.swift in Sources */,
-				03CDCCF82172FB3200A7E02B /* HeightChartViewController.swift in Sources */,
+				03CDCCF82172FB3200A7E02B /* ChartViewController.swift in Sources */,
+				03FA5DB1218D5C4300480F73 /* Figure.swift in Sources */,
 				3309F03221880E780014BB0F /* ImageCollectionViewController.swift in Sources */,
 				3309F03A21887F0D0014BB0F /* ImageTableViewCell.swift in Sources */,
+				03FA5DAD218D279400480F73 /* ReportHealthViewContoller.swift in Sources */,
+				03FA5DA9218D271400480F73 /* FamilyReportViewController.swift in Sources */,
 				03CDCCEE2172F45000A7E02B /* HomeViewController.swift in Sources */,
 				03CDCCF62172F84D00A7E02B /* TodayViewController.swift in Sources */,
 			);
