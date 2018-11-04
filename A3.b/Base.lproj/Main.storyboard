@@ -179,7 +179,7 @@
                                     <constraint firstAttribute="width" constant="175" id="XAc-o7-y1u"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="21"/>
-                                <state key="normal" title="Family Gallery">
+                                <state key="normal" title="Unknown Photo">
                                     <color key="titleColor" red="1" green="0.50308805850000005" blue="0.17876600819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                             </button>
@@ -701,7 +701,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51S-4P-fqy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3990" y="1574"/>
+            <point key="canvasLocation" x="3950" y="1337"/>
         </scene>
         <!--Health Report-->
         <scene sceneID="UjX-i5-r9a">
@@ -1467,7 +1467,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3n-PE-SXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2569" y="2975"/>
+            <point key="canvasLocation" x="1134" y="2284"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9xZ-SK-H10">
