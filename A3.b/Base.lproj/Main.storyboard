@@ -1381,16 +1381,6 @@
                                     <segue destination="vHz-Hl-dbc" kind="show" identifier="selectedImages" id="2My-f7-ZYK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87a-9V-NYs">
-                                <rect key="frame" x="132.5" y="499" width="112" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="BW4-1f-TQA"/>
-                                </constraints>
-                                <state key="normal" title="Auto Generating"/>
-                                <connections>
-                                    <segue destination="OSp-32-FLD" kind="show" id="RWR-Ur-Fom"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sW4-Rt-nXn">
                                 <rect key="frame" x="37" y="132" width="302" height="309"/>
                                 <constraints>
@@ -1415,7 +1405,6 @@
                             <constraint firstItem="kNa-3C-V9H" firstAttribute="top" secondItem="sW4-Rt-nXn" secondAttribute="bottom" constant="20" id="BEd-1R-rfc"/>
                             <constraint firstItem="IAL-Xn-gXP" firstAttribute="trailing" secondItem="hVF-Pe-wtf" secondAttribute="trailing" id="Bd3-oK-8KL"/>
                             <constraint firstItem="IAL-Xn-gXP" firstAttribute="leading" secondItem="hVF-Pe-wtf" secondAttribute="leading" id="Kwe-sk-Fwo"/>
-                            <constraint firstItem="87a-9V-NYs" firstAttribute="leading" secondItem="hVF-Pe-wtf" secondAttribute="leading" constant="132.5" id="LgL-cJ-bGn"/>
                             <constraint firstItem="hVF-Pe-wtf" firstAttribute="trailing" secondItem="QQa-ms-aKf" secondAttribute="trailing" constant="138" id="N7s-3r-U4r"/>
                             <constraint firstItem="hVF-Pe-wtf" firstAttribute="bottom" secondItem="QQa-ms-aKf" secondAttribute="bottom" constant="51" id="NGg-JF-Fjw"/>
                             <constraint firstItem="sW4-Rt-nXn" firstAttribute="leading" secondItem="hVF-Pe-wtf" secondAttribute="leading" constant="37" id="RO9-Vu-rgR"/>
@@ -1424,8 +1413,6 @@
                             <constraint firstItem="IAL-Xn-gXP" firstAttribute="bottom" secondItem="hVF-Pe-wtf" secondAttribute="bottom" id="U03-z4-Gu1"/>
                             <constraint firstItem="kNa-3C-V9H" firstAttribute="leading" secondItem="hVF-Pe-wtf" secondAttribute="leading" constant="60" id="apa-75-V9Z"/>
                             <constraint firstItem="hVF-Pe-wtf" firstAttribute="trailing" secondItem="sW4-Rt-nXn" secondAttribute="trailing" constant="36" id="kmx-n3-E0t"/>
-                            <constraint firstItem="87a-9V-NYs" firstAttribute="top" secondItem="kNa-3C-V9H" secondAttribute="bottom" constant="8" id="oIk-aa-bKe"/>
-                            <constraint firstItem="hVF-Pe-wtf" firstAttribute="trailing" secondItem="87a-9V-NYs" secondAttribute="trailing" constant="130.5" id="tYa-k0-lNl"/>
                             <constraint firstItem="IAL-Xn-gXP" firstAttribute="bottom" secondItem="hVF-Pe-wtf" secondAttribute="bottom" id="xjI-NV-Bjz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hVF-Pe-wtf"/>

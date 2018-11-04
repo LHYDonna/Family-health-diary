@@ -140,7 +140,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             try firebaseAuth.signOut()
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
-            self.present(newViewController, animated: true, completion: nil)
+            self.navigationController?.pushViewController(newViewController, animated: true)
+            //self.present(newViewController, animated: true, completion: nil)
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }

@@ -49,8 +49,7 @@
 		3309F04C218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */; };
 		3309F052218ECB310014BB0F /* beach-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3309F051218ECB300014BB0F /* beach-gif.gif */; };
 		3309F054218EDD270014BB0F /* UnknownImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F053218EDD270014BB0F /* UnknownImageViewController.swift */; };
-		33295D14218F048E0036E77E /* Pods_A3_b.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */; };
+		33295D16218F09480036E77E /* Pods_A3_b.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F796215C5590382BE9CC710 /* Pods_A3_b.framework */; };
 		33B24B8B2185890F00F5E29E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33B24B892185890F00F5E29E /* Model.xcdatamodeld */; };
 		AE8E0C978CF93E147E5B3AED /* Pods_A3_bUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */; };
 /* End PBXBuildFile section */
@@ -71,20 +70,6 @@
 			remoteInfo = A3.b;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		33295D15218F048E0036E77E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				33295D14218F048E0036E77E /* Pods_A3_b.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03CDCCB32172DC8700A7E02B /* A3.b.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A3.b.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +121,6 @@
 		3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyGIFGalleryViewController.swift; sourceTree = "<group>"; };
 		3309F051218ECB300014BB0F /* beach-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "beach-gif.gif"; sourceTree = "<group>"; };
 		3309F053218EDD270014BB0F /* UnknownImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownImageViewController.swift; sourceTree = "<group>"; };
-		33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeVideoViewController.swift; sourceTree = "<group>"; };
 		33B24B8A2185890F00F5E29E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		65E013667EB3FCC3F24A10B4 /* Pods-A3.bTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A3.bTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-A3.bTests/Pods-A3.bTests.release.xcconfig"; sourceTree = "<group>"; };
 		A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A3_bUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33295D16218F09480036E77E /* Pods_A3_b.framework in Frameworks */,
 				3309F0402188AF880014BB0F /* MobileCoreServices.framework in Frameworks */,
 				12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */,
 			);
@@ -221,7 +206,6 @@
 				03CDCCFF2173167B00A7E02B /* Person.swift */,
 				03CDCD01217316BE00A7E02B /* BodyFeature.swift */,
 				12F70687217F22D4009DC136 /* GoogleService-Info.plist */,
-				33B24B8421843D1B00F5E29E /* MakeVideoViewController.swift */,
 				33B24B892185890F00F5E29E /* Model.xcdatamodeld */,
 				3309F02F21880E590014BB0F /* ImageSelectedTableViewController.swift */,
 				3309F03121880E780014BB0F /* ImageCollectionViewController.swift */,
@@ -300,7 +284,6 @@
 				03CDCCB02172DC8700A7E02B /* Frameworks */,
 				03CDCCB12172DC8700A7E02B /* Resources */,
 				5DC0392DD75A5D2E11B91893 /* [CP] Embed Pods Frameworks */,
-				33295D15218F048E0036E77E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -526,7 +509,6 @@
 				03FA5DB5218DCF6100480F73 /* UIImageView.swift in Sources */,
 				03CDCCEC2172F42A00A7E02B /* PasswordResetViewController.swift in Sources */,
 				3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */,
-				33B24B8521843D1B00F5E29E /* MakeVideoViewController.swift in Sources */,
 				03CDCCEA2172EA4400A7E02B /* RegisterViewController.swift in Sources */,
 				3309F0422188B6AA0014BB0F /* LoadGif.swift in Sources */,
 				03CDCD02217316BE00A7E02B /* BodyFeature.swift in Sources */,
@@ -721,6 +703,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 58K6737D4P;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				INFOPLIST_FILE = A3.b/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -743,6 +726,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 58K6737D4P;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				INFOPLIST_FILE = A3.b/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -37,6 +37,9 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         self.gifCollectionView.backgroundColor = .clear
+        if self.localGIFList.count == 0 {
+            self.showMessage("No local gif image found.", "Ah oh!")
+        }
     }
     
     
