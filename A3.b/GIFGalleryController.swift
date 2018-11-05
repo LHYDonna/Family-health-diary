@@ -29,6 +29,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
     var localGIFList:[String] = []
     var firebaseGIFList:[String] = []
     
+    // set initail images and values
     override func viewDidLoad() {
         super.viewDidLoad()
         self.localGIFList = self.getAllStoredGifName()
@@ -48,6 +49,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
 
     }
     
+    // set image data to each cell og the collection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GIFCollectionViewCell
         
@@ -68,6 +70,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
+    // select item function
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let fileName = self.localGIFList[indexPath.row]
         self.selectedGif.image = self.getGIFFromLocalStorage(imageID: fileName)
@@ -76,7 +79,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    
+    // save gif image to the firebase
     @IBAction func saveToFamilyGalleryBtnClicked(_ sender: Any) {
 
         if let gifID = self.selectedGifID{
@@ -109,7 +112,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
 
     }
     
-    
+    // get all the gif name stored in loacl storage
     func getAllStoredGifName() -> [String]{
         print ("====== geting storing GIF from phone")
         let documentURL = fileManager.urls(for:.documentDirectory,in:.userDomainMask).first!
@@ -147,7 +150,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return userStoredFiles
     }
     
-    
+    // get gif from local storage
     func getGIFFromLocalStorage(imageID: String) -> UIImage{
         print ("--- generating a gif image!!")
         let fileName = "\(imageID).gif"
@@ -158,21 +161,12 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         return gifViewImage!
     }
     
+    // show messages function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

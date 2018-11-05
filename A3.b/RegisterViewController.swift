@@ -84,6 +84,9 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
         }
     }
     
+    // register button
+    // take a validation to all the inputed data
+    // If all the data is legal, create a person to firebase
     @IBAction func registerBtn(_ sender: Any) {
         let raspberryID = respberryTextfield.text
         let name = nameTextField.text
@@ -144,7 +147,6 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
             let matchData = [ "email": email,
                               "raspberryID": raspberryID] as [String : Any]
             self.ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).setValue(personData)
-            self.ref.child("RaspberryMatchTable").childByAutoId().setValue(matchData)
         }
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -152,6 +154,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
         self.present(newViewController, animated: true, completion: nil)
     }
     
+    // display error messages function
     func displayErrorMessage(_ errorMessage: String?){
         let allertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
         allertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
@@ -167,6 +170,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
         self.present(alert, animated: true, completion: nil)
     }
     
+    // function used to generate a unique user id
     func generateId() -> Int{
         var bool = true
         var id = -1

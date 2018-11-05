@@ -33,7 +33,6 @@
 		03FA5DB7218DE72400480F73 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA5DB6218DE72400480F73 /* Validation.swift */; };
 		06F61520093E3C0773EC5F17 /* Pods_A3_bTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30EB81EA7FC1E1062FAD75C /* Pods_A3_bTests.framework */; };
 		12F70688217F22D4009DC136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F70687217F22D4009DC136 /* GoogleService-Info.plist */; };
-		12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CDCD042173390000A7E02B /* CoreData.framework */; };
 		3309F03021880E590014BB0F /* ImageSelectedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F02F21880E590014BB0F /* ImageSelectedTableViewController.swift */; };
 		3309F03221880E780014BB0F /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F03121880E780014BB0F /* ImageCollectionViewController.swift */; };
 		3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F033218810650014BB0F /* ImageCollectionViewCell.swift */; };
@@ -138,7 +137,6 @@
 			files = (
 				33295D16218F09480036E77E /* Pods_A3_b.framework in Frameworks */,
 				3309F0402188AF880014BB0F /* MobileCoreServices.framework in Frameworks */,
-				12F70689217F23E1009DC136 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +184,7 @@
 		03CDCCB52172DC8700A7E02B /* A3.b */ = {
 			isa = PBXGroup;
 			children = (
+				33239A48218FEDA70067DEED /* View */,
 				03CDCCB62172DC8700A7E02B /* AppDelegate.swift */,
 				3309F051218ECB300014BB0F /* beach-gif.gif */,
 				03CDCCB82172DC8800A7E02B /* ViewController.swift */,
@@ -257,6 +256,13 @@
 				A19022E57DB615168E2160DD /* Pods_A3_bUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		33239A48218FEDA70067DEED /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		7CDA4D10886D8140741950F9 /* Pods */ = {

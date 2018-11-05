@@ -57,7 +57,6 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
     }
     
     
-    
     func getAllSharedGifFromFirebase(){
         self.firebaseGIFList = []
         ref.child("RaspberryRepository").child(raspberryID!).child("shared_gif").queryOrderedByKey().observeSingleEvent(of: .value) { (snapShot) in
@@ -82,7 +81,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
         
     }
 
-    
+    // show messages function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))

@@ -47,7 +47,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         }
     }
     
-    
+    // set values to table view cells
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var reuseIdentifier = "imageTableViewCell"
         if indexPath.section == SECTION_COUNT {
@@ -78,18 +78,16 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         return cell
      }
     
+    // set table height
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
-    
     
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
          // Return false if you do not want the specified item to be editable.
          return true
      }
- 
-    
     
      // Override to support editing the table view.
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -101,8 +99,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         tableView.reloadData()
         self.selectedImagesDelegate?.generateAnimationFromSelectedImages()
      }
-    
-    
+
     
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         self.selectedImagesDelegate?.moveImage(fromIndex: fromIndexPath.row, toIndex: to.row)
@@ -115,6 +112,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         return true
      }
     
+    // get images from local storage
     func getImageFromLocalStorage(imageID: String) -> UIImage{
         let fileName = "\(imageID).png"
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
@@ -133,6 +131,7 @@ class ImageSelectedTableViewController: UITableViewController, ImageTableViewDel
         tableView.reloadData()
     }
     
+    // navigate to image collection view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "imageGallery"{
             let controller = segue.destination as! ImageCollectionViewController

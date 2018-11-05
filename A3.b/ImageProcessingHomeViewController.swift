@@ -168,8 +168,6 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         print ("finish storing one picture to phone")
     }
     
-    
-    
     func getAllBodyFeaturesWithoutImageData(){
         self.bodyFeatures = []
         let userID = (person!.user_id)!
@@ -250,6 +248,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         print ("=== finished generating gif")
     }
     
+    // get image from local storage
     func getImageFromLocalStorage(imageID: String) -> UIImage{
         let fileName = "\(imageID).png"
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
@@ -264,6 +263,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         return image!
     }
     
+    // generate gif and save it to local storage
     func generateAndSaveGifWithExtension(photos: [UIImage], filename: String) -> Bool {
         let documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let path = documentsDirectoryPath.appending("/\(filename).gif")
@@ -281,7 +281,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         return false
     }
     
-    
+    // save images to firebase
     @IBAction func saveBtnClicked(_ sender: Any) {
         if selectedImages.count <= 1{
             self.showMessage("Please selected at least two images.", "Failed...")
@@ -307,12 +307,14 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         }
     }
     
+    // show message function
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // set activity handler
     func setupActivityHandler()
     {
         activityIndicator.center = self.view.center
@@ -323,6 +325,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
+    // navigate to image selected view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectedImages"{
             let controller = segue.destination as! ImageSelectedTableViewController

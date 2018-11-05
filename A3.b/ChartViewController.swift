@@ -14,8 +14,6 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     //@IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var lineChartView: LineChartView!
-    @IBOutlet weak var heightView: UIImageView!
-    @IBOutlet weak var weightView: UIImageView!
     @IBOutlet weak var background: UIImageView!
     
     //var showPersonDelegate: ManagePersonProtocol?
@@ -33,23 +31,10 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         getData()
         //getXValue1()
         drawLineChart(bodyfeature)
-        heightView.image = UIImage.init(named: "default")
-        //let tapGesture = UITapGestureRecognizer(target: self, action: "imageTapped:")
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChartViewController.imageTapped(gesture:)))
-        heightView.addGestureRecognizer(tapGesture)
-        heightView.isUserInteractionEnabled = true
         
         self.background.image =  UIImage.gif(name: "beach-gif")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
-    }
-    
-    @objc func imageTapped(gesture: UIGestureRecognizer) {
-        // if the tapped view is a UIImageView then set it to imageview
-        if let imageView = gesture.view as? UIImageView {
-            print("Image Tapped")
-            drawLineChart(bodyfeature,1)
-        }
     }
 
 

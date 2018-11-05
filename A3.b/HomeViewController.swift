@@ -38,10 +38,10 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         fetchCurrentUser()
         setupActivityHandler()
         setUI()
-
         // Do any additional setup after loading the view.
     }
     
+    // set initial UI
     func setUI(){
         backgroundImageView.image = UIImage.gif(name: "beach-gif")
         backgroundImageView.layer.zPosition = -1
@@ -55,6 +55,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         fgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
     }
     
+    // change the home page data when a user edit his or her profile in edit personal profile page
     func editPersonFile(person: Person) {
         self.person = person
         namelabel.text = person.name
@@ -66,6 +67,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         // Dispose of any resources that can be recreated.
     }
     
+    // when the user data is being downloaded, show a activity handler icon in the middle of the home page
+    // and user can do nothing when the data is loading
     func setupActivityHandler()
     {
         activityIndicator.center = self.view.center
@@ -76,6 +79,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
+    // fetch current user from  firebase by matching email
+    // get person obgject
     func fetchCurrentUser(){
         let email = Auth.auth().currentUser?.email
         ref.child("RaspberryRepository").child(raspberryID!).child("member").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
@@ -119,6 +124,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         }
     }
     
+    // convert portrait image from a 64 based string
+    // rounded the image
     func showPortrait(){
         var string = person?.portrait!
         if (string!.elementsEqual("Default")){
@@ -134,6 +141,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         }
     }
 
+    // sign out a user
+    // nevigate to the sign in page
     @IBAction func signoutBtn(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
@@ -141,7 +150,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
             self.navigationController?.pushViewController(newViewController, animated: true)
-            //self.present(newViewController, animated: true, completion: nil)
+
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
@@ -149,7 +158,8 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     
     
     // MARK: - Navigation
-
+    
+    // navigate to other uiviewcontrollers with data from this view controller
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "personFileEditSegue"{

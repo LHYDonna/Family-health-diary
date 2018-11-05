@@ -46,6 +46,7 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         
     }
     
+    // set image cell to the collectionview
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "unknownImageCollectionCell", for: indexPath) as! ImageCollectionViewCell
         print (indexPath.row)
@@ -141,7 +142,7 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         
     }
     
-    
+    // get unknown images from firebase
     func getUnknownImageFromFirebase(){
         self.unknownImageList = []
         let raspberryID = person!.raspberryID
@@ -203,6 +204,7 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         return result
     }
 
+    // set activity handler
     func setupActivityHandler()
     {
         activityIndicator.center = self.view.center
@@ -213,18 +215,20 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
 
+    // set selected user values
     func setSelectedUser(user: Person) {
         self.selectedUser = user
         self.nameLabel.text = user.name!
         print ("user: \(user.name!) is chosen")
     }
     
+
     func showMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
-    
+ 
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          // Get the new view controller using segue.destination.
          // Pass the selected object to the new view controller.

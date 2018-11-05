@@ -24,6 +24,7 @@ class PasswordResetViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // sent email to the user to reset his or her password if the email has been registered in the firebase
     @IBAction func sendEmailBtn(_ sender: Any) {
         Auth.auth().sendPasswordReset(withEmail: emailTextField.text!){error in
             if let error = error {
@@ -36,20 +37,11 @@ class PasswordResetViewController: UIViewController {
         }
     }
     
+    // display error message
     func displayErrorMessage(_ errorMessage: String?){
         let allertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
         allertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(allertController,animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

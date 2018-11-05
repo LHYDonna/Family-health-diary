@@ -70,6 +70,7 @@ class ReportHealthViewContoller: UIViewController {
         }
     }
     
+    // calculate chart used data and save them to a list
     func figureCalculator(){
         for person in personList{
             let height = (Double(person!.height!)!/100) * 6
@@ -86,6 +87,7 @@ class ReportHealthViewContoller: UIViewController {
         }
     }
     
+    // set barchart
     func setChart() {
         var nameList: [String?] = []
         var colorList: [UIColor?] = []
@@ -116,6 +118,7 @@ class ReportHealthViewContoller: UIViewController {
         healthBarChartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
     }
     
+    // set the bar colour based on the different values
     func setColor(value: Double) -> UIColor{
         if(value < 60){
             return UIColor.red
@@ -130,15 +133,5 @@ class ReportHealthViewContoller: UIViewController {
             return UIColor.black
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
