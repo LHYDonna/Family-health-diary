@@ -18,6 +18,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
     let reuseIdentifier = "familyGIFCell"
     let fileManager = FileManager.default
     var ref = Database.database().reference()
+    var result:String = "unfinish"
     
     @IBOutlet weak var collectionView: UICollectionView!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -77,8 +78,7 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
                 self.showMessage("No gif has been shared...", "Ah oh!")
             }
         }
-        
-        
+
     }
 
     // show messages function

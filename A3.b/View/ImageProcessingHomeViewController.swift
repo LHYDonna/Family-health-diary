@@ -16,7 +16,6 @@ import MobileCoreServices
 protocol SelectedImagesDelegate {
     func getBodyFeature(index: Int) -> BodyFeature?
     func addImage(imageID: String)
-    //func removeImage(imageID: String) -> Int?
     func removeImage(index: Int)
     func getSelectedImages() -> [String]
     func moveImage(fromIndex:Int, toIndex:Int)
@@ -43,7 +42,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     var selectedImages:[String] = []
     var ref = Database.database().reference()
     let fileManager = FileManager.default
-     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     let ANIMATION_DURATION = 1.0
     

@@ -13,15 +13,16 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     
     var selectedUser: Person?
     var selectedImageID: String?
+    var selectedFeature: BodyFeature?
     var ref = Database.database().reference()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var unknownImageList:[String] = []
-    var unknownUIImageList:[UIImage] = []
+    var unknownFeatureList:[BodyFeature] = []
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var unknownCollection: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var background: UIImageView!
     
+    @IBOutlet weak var userProtrait: UIImageView!
     var person:Person?
     var raspberryID:String?
 
@@ -29,20 +30,30 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selectedImage.image = UIImage(named: "who-is")
-        self.getUnknownImageFromFirebase()
-        self.getAllUnknownUIImage()
+        self.userProtrait.image = UIImage(named: "who-is")
+        self.getAllUnknownBodyFeatures()
         self.setupActivityHandler()
         // Do any additional setup after loading the view.
         self.background.image =  UIImage.gif(name: "beach-gif")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         self.unknownCollection.backgroundColor = .clear
+        
+        self.userProtrait.layer.masksToBounds = true
+        self.userProtrait.layer.borderWidth = 5
+        self.userProtrait.layer.borderColor = UIColor.green.cgColor
+        self.userProtrait.layer.cornerRadius = self.userProtrait.bounds.width / 3
+        
+        self.selectedImage.layer.masksToBounds = true
+        self.selectedImage.layer.borderWidth = 5
+        self.selectedImage.layer.borderColor = UIColor.green.cgColor
+        self.selectedImage.layer.cornerRadius = self.selectedImage.bounds.width / 3
 
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.unknownImageList.count
+        return self.unknownFeatureList.count
         
     }
     
@@ -51,7 +62,10 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "unknownImageCollectionCell", for: indexPath) as! ImageCollectionViewCell
         print (indexPath.row)
         // Configure the cell
-        cell.imageView.image = self.unknownUIImageList[indexPath.row]
+        let oneFeature = self.unknownFeatureList[indexPath.row]
+        let photoData = oneFeature.photo!
+        let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+        cell.imageView.image = UIImage(data: imageData! as Data)
         cell.imageView.layer.masksToBounds = true
         cell.imageView.layer.borderWidth = 2.5
         cell.imageView.layer.borderColor = UIColor.green.cgColor
@@ -61,32 +75,52 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedImage.image = self.unknownUIImageList[indexPath.row]
-        self.selectedImageID = self.unknownImageList[indexPath.row]
+        let oneFeature = self.unknownFeatureList[indexPath.row]
+        let photoData = oneFeature.photo!
+        let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+        self.selectedImage.image = UIImage(data: imageData! as Data)
+        self.selectedImageID = oneFeature.photoID!
+        self.selectedFeature = oneFeature
+    }
+    
+    func deleteUnknownImage(imageID: String){
+        print ("----- func: delete one unknown photo")
+        let raspberryID = person!.raspberryID
+        self.ref.child("RaspberryRepository").child(raspberryID!).child("unknown_photo").queryOrdered(byChild: "photoID").queryEqual(toValue: imageID).observeSingleEvent(of: .value) { (snapShot) in
+            if let items = snapShot.value as? [String: AnyObject]{
+                for item in items{
+                    print ("----- delete one unknow photo in \(snapShot.ref.child(item.key).description)")
+                    snapShot.ref.child(item.key).removeValue()
+                }
+                self.getAllUnknownBodyFeatures()
+                self.selectedImage.image = UIImage(named: "who-is")
+                self.userProtrait.image = UIImage(named: "who-is")
+                self.selectedUser = nil
+                self.selectedImageID = nil
+                self.selectedFeature = nil
+                self.nameLabel.text = "No user chosen"
+            }
+        }
     }
     
     
     @IBAction func assignBtnClicked(_ sender: Any) {
         let userID = (selectedUser?.user_id)!
-        let checkResult = self.checkMatchTable(userID: userID)
-        let bodyfeature = self.getOneBodyFeatureByImageID(imageID: self.selectedImageID!)
-        if checkResult {
-            self.addOneBodyFeatureToUser(userID:userID,bodyfeature: bodyfeature!)
-        }else{
-            let matchTable = self.generateMatchTable(userID:userID, bodyfeature: bodyfeature!)
-            self.createOneMatchTableToFirebase(matchTable: matchTable)
-            self.addOneBodyFeatureToUser(userID: userID,bodyfeature: bodyfeature!)
-        }
+        let bodyfeature = self.selectedFeature
+        let matchTable = self.generateMatchTable(userID:userID, bodyfeature: bodyfeature!)
+        self.checkAndUpdateMatchTable(userID: userID, bodyfeature: bodyfeature!, matchTable: matchTable)
     }
+    
     
     func generateMatchTable(userID: Int, bodyfeature: BodyFeature) -> [String:Any]{
         let height = bodyfeature.height!
         let weight = bodyfeature.weight!
-        let matchTable = ["height": userID,
-                    "weight": height,
-                    "userID": weight] as [String : Any]
+        let matchTable = ["userID": userID,
+                    "height": height,
+                    "weight": weight] as [String : Any]
         return matchTable
     }
+    
     
     func addOneBodyFeatureToUser(userID:Int, bodyfeature: BodyFeature){
         let raspberryID = person?.raspberryID
@@ -102,33 +136,25 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
                     "height": height,
                     "wight": weight,
                     "photoID": newPhotoID,
-                    "weight": height,
                     "userID": userID] as [String : Any]
         let userDataUpdate = ["/\(key!)": post]
-        ref.child("RaspberryRepository").child(raspberryID!).child("member").child("\(userID)").child("data").child("/\(key!)").updateChildValues(userDataUpdate)
-        
+        ref.child("RaspberryRepository").child(raspberryID!).child("member").child("\(userID)").child("data").updateChildValues(userDataUpdate)
+        self.deleteUnknownImage(imageID: (self.selectedFeature?.photoID)!)
         self.showMessage("Submitt to family GIF repository.", "Suceess!")
     }
     
-    func checkMatchTable(userID: Int) -> Bool{
-        var result:Bool = false
-        var matchTableUserIDList:[String] = []
+    func checkAndUpdateMatchTable(userID: Int, bodyfeature:BodyFeature, matchTable:[String:Any]){
         let raspberryID = person!.raspberryID
-        ref.child("RaspberryRepository").child(raspberryID!).child("match_table").queryOrdered(byChild: "userID").observeSingleEvent(of: .value) { (snapShot) in
+        ref.child("RaspberryRepository").child(raspberryID!).child("match_table").queryOrdered(byChild: "userID").queryEqual(toValue: userID).observeSingleEvent(of: .value) { (snapShot) in
             print ("\(snapShot.children.allObjects.count) match table item found in friebase")
             if let items = snapShot.value as? [String: AnyObject]{
-                for item in items{
-                    let userIDGet = item.value["userID"] as! String
-                    matchTableUserIDList.append(userIDGet)
-                }
-            }
-            if matchTableUserIDList.contains(String(userID)) {
-                result = true
+                print ("----- user found in match table")
             }else{
-                result = false
+                print ("----- user found in match table")
+                self.createOneMatchTableToFirebase(matchTable: matchTable)
             }
+                self.addOneBodyFeatureToUser(userID: userID,bodyfeature: bodyfeature)
         }
-        return result
     }
     
     
@@ -137,56 +163,17 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         let key = ref.child("RaspberryRepository").child(raspberryID!).child("match_table").childByAutoId().key
         let post = matchTable
         let metchTableUpdate = ["/\(key!)": post]
-        ref.child("RaspberryRepository").child(raspberryID!).child("match_table").child("/\(key!)").updateChildValues(metchTableUpdate)
+        ref.child("RaspberryRepository").child(raspberryID!).child("match_table").updateChildValues(metchTableUpdate)
         self.showMessage("Submitt to family GIF repository.", "Suceess!")
         
     }
     
-    // get unknown images from firebase
-    func getUnknownImageFromFirebase(){
-        self.unknownImageList = []
-        let raspberryID = person!.raspberryID
-        ref.child("RaspberryRepository").child(raspberryID!).child("unknown_photo").queryOrdered(byChild: "created_date").observeSingleEvent(of: .value) { (snapShot) in
-            print ("\(snapShot.children.allObjects.count) unknown images found in friebase")
-            if let items = snapShot.value as? [String: AnyObject]{
-                for item in items{
-                    print("=== Geting image data with id: \(item.value["photoID"]!!) ===")
-                    let photoID = item.value["photoID"] as! String
-                    //let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                    //let oneImage = UIImage(data: imageData! as Data)
-                    self.unknownImageList.append(photoID)
-                }
-            }
-            
-        }
-    }
     
-    func getAllUnknownUIImage(){
-       let raspberryID = person?.raspberryID
-        ref.child("RaspberryRepository").child(raspberryID!).child("unknown_photo").queryOrdered(byChild: "created_date").observeSingleEvent(of: .value) { (snapShot) in
-            print ("\(snapShot.children.allObjects.count) unknown images found in friebase")
-            if let items = snapShot.value as? [String: AnyObject]{
-                for item in items{
-                    print("=== Geting image data with id: \(item.value["photoID"]!!) ===")
-                    let photoID = item.value["photoID"] as! String
-                    let photoData = item.value["photo"] as! String
-                    let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                    let oneImage = UIImage(data: imageData! as Data)
-                    self.unknownUIImageList.append(oneImage!)
-                }
-            }
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
-            self.unknownCollection.reloadData()
-        }
-        
-    }
-    
-    func getOneBodyFeatureByImageID(imageID: String) -> BodyFeature?{
-        var result:BodyFeature? = nil
+    func getAllUnknownBodyFeatures(){
+        self.unknownFeatureList = []
         let raspberryID = person?.raspberryID
-        ref.child("RaspberryRepository").child(raspberryID!).child("unknow").queryOrdered(byChild: "photoID").queryEqual(toValue: imageID).observeSingleEvent(of: .value) { (snapShot) in
-            print ("searching \(imageID) in 'data' document in firebase")
+        ref.child("RaspberryRepository").child(raspberryID!).child("unknown_photo").queryOrdered(byChild: "photoID").observeSingleEvent(of: .value) { (snapShot) in
+            print ("searching unknown features in 'data' document in firebase")
             print ("\(snapShot.children.allObjects.count)")
             if let items = snapShot.value as? [String: AnyObject]{
                 for oneData in items{
@@ -197,12 +184,16 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
                     let photoID = oneData.value["photoID"] as! String
                     let id = oneData.value["userID"] as! Int
                     let bodyFeature = BodyFeature(user_id: id, dateTime: date, height: height, weight: weight, photo: photo, photoID: photoID)
-                    result = bodyFeature
+                    self.unknownFeatureList.append(bodyFeature)
                 }
             }
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            self.unknownCollection.reloadData()
         }
-        return result
     }
+    
+
 
     // set activity handler
     func setupActivityHandler()
@@ -219,6 +210,9 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     func setSelectedUser(user: Person) {
         self.selectedUser = user
         self.nameLabel.text = user.name!
+        let photoData = user.portrait!
+        let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+        self.userProtrait.image = UIImage(data: imageData! as Data)
         print ("user: \(user.name!) is chosen")
     }
     

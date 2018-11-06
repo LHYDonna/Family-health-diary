@@ -84,6 +84,7 @@ class LoginViewController: UIViewController {
             }
             else{
                 let ref = Database.database().reference()
+                print (ref.description())
                 ref.child("RaspberryMatchTable").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapShot) in
                     if let items = snapShot.value as? [String: AnyObject]{
                         for item in items{

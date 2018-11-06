@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import ImageIO
+import SwiftGifOrigin
 import MobileCoreServices
 
 class GifGalleryController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
