@@ -14,7 +14,6 @@ class ReportHealthViewContoller: UIViewController {
 
     var person: Person?
     @IBOutlet weak var healthBarChartView: BarChartView!
-    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var ref = Database.database().reference().child("RaspberryRepository")
     var personList: [Person?] = []
@@ -23,7 +22,6 @@ class ReportHealthViewContoller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
         // Do any additional setup after loading the view.
     }
 
@@ -107,8 +105,10 @@ class ReportHealthViewContoller: UIViewController {
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Health Grade")
         chartDataSet.colors = colorList as! [NSUIColor]
         let chartData = BarChartData(dataSet: chartDataSet)
+        healthBarChartView.animate(xAxisDuration: 1)
+        healthBarChartView.animate(yAxisDuration: 1)
         healthBarChartView.data = chartData
-        
+        healthBarChartView.chartDescription?.text = ""
         healthBarChartView.leftAxis.axisMinimum = 0
         healthBarChartView.leftAxis.axisMaximum = 100
         healthBarChartView.leftAxis.drawGridLinesEnabled = false

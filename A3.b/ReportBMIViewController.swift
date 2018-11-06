@@ -28,7 +28,6 @@ class ReportBMIViewController: UIViewController {
     @IBOutlet weak var lineChartChild: LineChartView!
     @IBOutlet weak var BMIImageView: UIImageView!
     @IBOutlet weak var CBMIImageView: UIImageView!
-    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var person: Person?
     var ref = Database.database().reference().child("RaspberryRepository")
@@ -39,8 +38,8 @@ class ReportBMIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
-        backgroundImageView.layer.zPosition = -1
+        //lineChartAdult.layer.borderWidth = 1
+        //lineChartAdult.layer.borderColor = UIColor.cyan.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -154,8 +153,10 @@ class ReportBMIViewController: UIViewController {
         self.lineChartAdult.rightAxis.enabled = false
         
         self.lineChartAdult.data = data
+        self.lineChartAdult.chartDescription?.text = ""
         BMIImageView.image = UIImage(named: "AdultBMI")
-        BMIImageView.alpha = 0.5
+        BMIImageView.layer.zPosition = -1
+        self.lineChartAdult.layer.zPosition = 1
     }
     
     // draw a line chart for children, set fixed x and y values
@@ -168,7 +169,7 @@ class ReportBMIViewController: UIViewController {
             return ChartDataEntry(x: Double(ageVal!), y: bwiVal!, icon: image)
         }
         
-        let setValues = LineChartDataSet(values: values, label: "Child")
+        let setValues = LineChartDataSet(values: values, label:"Child")
         setValues.setColor(UIColor.blue)
         setValues.lineWidth = 0.0
         setValues.drawIconsEnabled = true
@@ -185,8 +186,11 @@ class ReportBMIViewController: UIViewController {
         self.lineChartChild.rightAxis.enabled = false
         
         self.lineChartChild.data = data
+        self.lineChartChild.chartDescription?.text = ""
         CBMIImageView.image = UIImage(named: "ChildBMI")
-        CBMIImageView.alpha = 0.5
+        CBMIImageView.alpha = 0.6
+        CBMIImageView.layer.zPosition = -1
+        self.lineChartChild.layer.zPosition = 1
         
     }
 

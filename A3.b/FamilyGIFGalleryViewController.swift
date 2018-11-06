@@ -12,8 +12,7 @@ import ImageIO
 import MobileCoreServices
 
 class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    @IBOutlet weak var backgroudImageView: UIImageView!
+
     
     let reuseIdentifier = "familyGIFCell"
     let fileManager = FileManager.default
@@ -29,7 +28,6 @@ class FamilyGIFGalleryViewController: UIViewController,UICollectionViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroudImageView.image = UIImage.gif(name: "beach-gif")
         self.getAllSharedGifFromFirebase()
         self.setupActivityHandler()
         self.collectionView.backgroundColor = .clear
