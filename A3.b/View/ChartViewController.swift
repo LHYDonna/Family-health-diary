@@ -32,7 +32,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         //getXValue1()
         drawLineChart(bodyfeature)
         
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }

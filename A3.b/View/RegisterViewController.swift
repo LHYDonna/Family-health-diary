@@ -36,7 +36,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.image = UIImage(named: "background")
         //getAllPerson()
         // Do any additional setup after loading the view.
     }

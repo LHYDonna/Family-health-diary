@@ -23,7 +23,7 @@ class ReportHealthViewContoller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.image = UIImage(named: "background")
         // Do any additional setup after loading the view.
     }
 

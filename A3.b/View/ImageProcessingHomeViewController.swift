@@ -51,7 +51,7 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         

@@ -43,7 +43,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     
     // set initial UI
     func setUI(){
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.image = UIImage(named: "background")
         backgroundImageView.layer.zPosition = -1
         frBtn.layer.cornerRadius = frBtn.bounds.size.width/8
         flBtn.layer.cornerRadius = frBtn.bounds.size.width/8

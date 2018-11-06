@@ -37,7 +37,6 @@
 		3309F034218810650014BB0F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F033218810650014BB0F /* ImageCollectionViewCell.swift */; };
 		3309F036218813DE0014BB0F /* ImageProcessingHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */; };
 		3309F03A21887F0D0014BB0F /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F03921887F0D0014BB0F /* ImageTableViewCell.swift */; };
-		3309F03E2188AEC30014BB0F /* GifGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F03D2188AEC30014BB0F /* GifGalleryViewController.swift */; };
 		3309F0402188AF880014BB0F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3309F03F2188AF870014BB0F /* MobileCoreServices.framework */; };
 		3309F044218BF7B30014BB0F /* GIFCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F043218BF7B30014BB0F /* GIFCollectionViewCell.swift */; };
 		3309F046218BF8140014BB0F /* GIFCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3309F045218BF8140014BB0F /* GIFCollectionViewController.swift */; };
@@ -108,7 +107,6 @@
 		3309F033218810650014BB0F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		3309F035218813DE0014BB0F /* ImageProcessingHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingHomeViewController.swift; sourceTree = "<group>"; };
 		3309F03921887F0D0014BB0F /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
-		3309F03D2188AEC30014BB0F /* GifGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifGalleryViewController.swift; sourceTree = "<group>"; };
 		3309F03F2188AF870014BB0F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3309F043218BF7B30014BB0F /* GIFCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCollectionViewCell.swift; sourceTree = "<group>"; };
 		3309F045218BF8140014BB0F /* GIFCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCollectionViewController.swift; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 				03FA5DA8218D271400480F73 /* FamilyReportViewController.swift */,
 				03FA5DAA218D275E00480F73 /* ReportBMIViewController.swift */,
 				03FA5DAC218D279400480F73 /* ReportHealthViewContoller.swift */,
-				3309F03D2188AEC30014BB0F /* GifGalleryViewController.swift */,
 				3309F045218BF8140014BB0F /* GIFCollectionViewController.swift */,
 				3309F047218BFFC00014BB0F /* GIFGalleryController.swift */,
 				3309F04B218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift */,
@@ -523,7 +520,6 @@
 				3309F04C218EAD6A0014BB0F /* FamilyGIFGalleryViewController.swift in Sources */,
 				03CDCCE82172E65B00A7E02B /* LoginViewController.swift in Sources */,
 				3309F054218EDD270014BB0F /* UnknownImageViewController.swift in Sources */,
-				3309F03E2188AEC30014BB0F /* GifGalleryViewController.swift in Sources */,
 				3309F03021880E590014BB0F /* ImageSelectedTableViewController.swift in Sources */,
 				03FA5DB5218DCF6100480F73 /* UIImageView.swift in Sources */,
 				03CDCCEC2172F42A00A7E02B /* PasswordResetViewController.swift in Sources */,

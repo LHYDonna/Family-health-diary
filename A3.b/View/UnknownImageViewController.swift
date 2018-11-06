@@ -34,19 +34,19 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         self.getAllUnknownBodyFeatures()
         self.setupActivityHandler()
         // Do any additional setup after loading the view.
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         self.unknownCollection.backgroundColor = .clear
         
         self.userProtrait.layer.masksToBounds = true
         self.userProtrait.layer.borderWidth = 5
-        self.userProtrait.layer.borderColor = UIColor.green.cgColor
+        self.userProtrait.layer.borderColor = UIColor.cyan.cgColor
         self.userProtrait.layer.cornerRadius = self.userProtrait.bounds.width / 3
         
         self.selectedImage.layer.masksToBounds = true
         self.selectedImage.layer.borderWidth = 5
-        self.selectedImage.layer.borderColor = UIColor.green.cgColor
+        self.selectedImage.layer.borderColor = UIColor.cyan.cgColor
         self.selectedImage.layer.cornerRadius = self.selectedImage.bounds.width / 3
 
     }

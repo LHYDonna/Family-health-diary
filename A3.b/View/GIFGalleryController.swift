@@ -35,7 +35,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         super.viewDidLoad()
         self.localGIFList = self.getAllStoredGifName()
         // Do any additional setup after loading the view.
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         self.gifCollectionView.backgroundColor = .clear

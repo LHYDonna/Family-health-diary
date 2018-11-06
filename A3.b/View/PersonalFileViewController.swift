@@ -28,7 +28,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }

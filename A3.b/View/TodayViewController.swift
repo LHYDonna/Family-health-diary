@@ -36,7 +36,7 @@ class TodayViewController: UIViewController {
         weightView.layer.cornerRadius = weightView.bounds.width/7
         // Do any additional setup after loading the view.
         
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }
