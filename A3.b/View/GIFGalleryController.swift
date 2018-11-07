@@ -42,6 +42,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         if self.localGIFList.count == 0 {
             self.showMessage("No local gif image found.", "Ah oh!")
         }
+        
     }
     
     
@@ -64,7 +65,7 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         cell.gifImage.image = self.getGIFFromLocalStorage(imageID: fileName)
         cell.gifDateLabel.text = "\(dateString)"
         cell.gifImage.layer.masksToBounds = true
-        cell.gifImage.layer.borderWidth = 2.5
+        cell.gifImage.layer.borderWidth = 1.5
         cell.gifImage.layer.borderColor = UIColor.green.cgColor
         cell.gifImage.layer.cornerRadius = cell.gifImage.bounds.width / 7
     
@@ -77,6 +78,10 @@ class GifGalleryController: UIViewController, UICollectionViewDataSource, UIColl
         self.selectedGif.image = self.getGIFFromLocalStorage(imageID: fileName)
         self.selectedGifID = fileName
         let cell = collectionView.cellForItem(at: indexPath) as! GIFCollectionViewCell
+        self.selectedGif.layer.masksToBounds = true
+        self.selectedGif.layer.borderWidth = 1.0
+        self.selectedGif.layer.borderColor = UIColor.green.cgColor
+        self.selectedGif.layer.cornerRadius = self.selectedGif.bounds.width / 8
         
     }
     

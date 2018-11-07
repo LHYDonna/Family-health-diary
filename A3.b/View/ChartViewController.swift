@@ -21,7 +21,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     var bodyfeature: [BodyFeature] = []
     //var newFeature: [BodyFeature?] = []
-    let format = ["Day","Month"]
+    let format = ["All","Month","Day"]
 
     
     override func viewDidLoad() {
@@ -63,6 +63,12 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
         if (format[row].elementsEqual("Month")){
             formatter.dateFormat = "Mon"
+            for feature in newFeature{
+                xAxis.append(formatter.string(from: Date(timeIntervalSince1970: (feature?.dateTime)!)))
+            }
+        }
+        if (format[row].elementsEqual("All")){
+            formatter.dateFormat = "dd/MM"
             for feature in newFeature{
                 xAxis.append(formatter.string(from: Date(timeIntervalSince1970: (feature?.dateTime)!)))
             }
@@ -130,15 +136,10 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             dataSets.append(setWeight)
             dataSets.append(setStandard)
         }
-        if (version == 1){
-            dataSets.append(setHeight)
-        }
-        if (version == 2){
-            dataSets.append(setWeight)
-        }
-        
         let data = LineChartData(dataSets: dataSets)
         self.lineChartView.data = data
+        self.lineChartView.animate(xAxisDuration: 1)
+        self.lineChartView.animate(yAxisDuration: 1)
     }
     
     
@@ -154,7 +155,13 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         formatter.dateFormat = "mm"
         var monthFlag = Int(formatter.string(from: Date(timeIntervalSince1970: (person?.data.first?.dateTime!)!)))
-
+        
+        // If choose by day, show the current month data, the last photo for every day
+        if (choice?.elementsEqual("All"))!{
+            newFeature = bodyfeature
+            return newFeature
+        }
+        
         
         // If choose by day, show the current month data, the last photo for every day
         if (choice?.elementsEqual("Day"))!{
@@ -210,15 +217,5 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
         return newFeature
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

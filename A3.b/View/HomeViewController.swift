@@ -45,14 +45,14 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     func setUI(){
         backgroundImageView.image = UIImage(named: "background")
         backgroundImageView.layer.zPosition = -1
-        frBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        flBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        epBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        rdBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        mvBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        vcBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        lgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        fgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        frBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        flBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        epBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        rdBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        mvBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        vcBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        lgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+//        fgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
     }
     
     // change the home page data when a user edit his or her profile in edit personal profile page
