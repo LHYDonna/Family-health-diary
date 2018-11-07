@@ -29,6 +29,7 @@ class ReportBMIViewController: UIViewController {
     @IBOutlet weak var BMIImageView: UIImageView!
     @IBOutlet weak var CBMIImageView: UIImageView!
     
+    @IBOutlet weak var background: UIImageView!
     var person: Person?
     var ref = Database.database().reference().child("RaspberryRepository")
     var personList: [Person?] = []
@@ -38,6 +39,8 @@ class ReportBMIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        background.image = UIImage(named: "background")
+        background.layer.zPosition = -1
         //lineChartAdult.layer.borderWidth = 1
         //lineChartAdult.layer.borderColor = UIColor.cyan.cgColor
     }

@@ -21,7 +21,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     var bodyfeature: [BodyFeature] = []
     //var newFeature: [BodyFeature?] = []
-    let format = ["Year","Month","Day"]
+    let format = ["All","Month","Day"]
 
     
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         //getXValue1()
         drawLineChart(bodyfeature)
         
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }
@@ -67,7 +67,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 xAxis.append(formatter.string(from: Date(timeIntervalSince1970: (feature?.dateTime)!)))
             }
         }
-        if (format[row].elementsEqual("Year")){
+        if (format[row].elementsEqual("All")){
             formatter.dateFormat = "dd/MM"
             for feature in newFeature{
                 xAxis.append(formatter.string(from: Date(timeIntervalSince1970: (feature?.dateTime)!)))
@@ -157,7 +157,7 @@ class ChartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         var monthFlag = Int(formatter.string(from: Date(timeIntervalSince1970: (person?.data.first?.dateTime!)!)))
         
         // If choose by day, show the current month data, the last photo for every day
-        if (choice?.elementsEqual("Year"))!{
+        if (choice?.elementsEqual("All"))!{
             newFeature = bodyfeature
             return newFeature
         }

@@ -51,14 +51,15 @@ class ImageProcessingHomeViewController: UIViewController, SelectedImagesDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
+
         
         animationView.image = UIImage.gif(name: "plant-grow")
         animationView.layer.masksToBounds = true
-        animationView.layer.borderWidth = 1.5
-        animationView.layer.borderColor = UIColor.green.cgColor
+        animationView.layer.borderWidth = 1.0
+        animationView.layer.borderColor = UIColor.black.cgColor
         animationView.layer.cornerRadius = animationView.bounds.width / 5
         
         self.getAllBodyFeaturesWithoutImageData()

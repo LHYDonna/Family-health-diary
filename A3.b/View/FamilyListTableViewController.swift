@@ -21,7 +21,6 @@ class FamilyListTableViewController: UITableViewController {
     var ref = Database.database().reference().child("RaspberryRepository")
     var chooseModel:Bool = false
     var userSelectingDelegate:UserSelectingDelegate?
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 
     // initial page
@@ -29,6 +28,8 @@ class FamilyListTableViewController: UITableViewController {
         super.viewDidLoad()
         loadData()
         self.setupActivityHandler()
+        self.view.backgroundColor = .clear
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
     }
     
     override func didReceiveMemoryWarning() {

@@ -28,7 +28,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }
@@ -138,6 +138,7 @@ class PersonalFileViewController: UIViewController, UIImagePickerControllerDeleg
         updatePerson()
         ref.child("RaspberryRepository").child((person?.raspberryID)!).child("member").child("\(String(describing: person!.user_id!))").updateChildValues(["name" : nameTextField.text,                                                                 "portrait" : person?.portrait, "height": heightTextField.text,"weight": weightTextField.text,"gender": gender,"dob": person?.dob])
         editpersonDelegate?.editPersonFile(person: person!)
+        createAltert(title: "Edit", message: "You have edited your profile successfully!")
     }
     
     // renew person data to person object

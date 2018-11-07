@@ -36,7 +36,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.image = UIImage(named: "background")
         //getAllPerson()
         // Do any additional setup after loading the view.
     }
@@ -71,6 +71,17 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
         }
     }
     
+    // pick image
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            photoImageView.image = image
+            //print(strBase64)
+        }
+        else{
+            // Error Message
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func indexChangedSeg(_ sender: Any) {
         switch genderSegment.selectedSegmentIndex
@@ -147,11 +158,12 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
             let matchData = [ "email": email,
                               "raspberryID": raspberryID] as [String : Any]
             self.ref.child("RaspberryRepository").child(raspberryID!).child("member").child(String(userID)).setValue(personData)
+            self.ref.child("RaspberryMatchTable").childByAutoId().setValue(matchData)
         }
-        
+        createAltert(title: "Create Account", message: "Successfully!")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
-        self.present(newViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(newViewController, animated: true)
     }
     
     // display error messages function
@@ -186,14 +198,5 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate, 
         return id
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

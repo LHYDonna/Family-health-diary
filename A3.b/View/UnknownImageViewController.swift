@@ -17,10 +17,15 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     var ref = Database.database().reference()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var unknownFeatureList:[BodyFeature] = []
+    
+    let UNKNOWN_USER = "who-is"
+    let UNKNOWN_PHOTO = "unknown-gif"
+    
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var unknownCollection: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var imageLabel: UILabel!
     
     @IBOutlet weak var userProtrait: UIImageView!
     var person:Person?
@@ -29,25 +34,26 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selectedImage.image = UIImage(named: "who-is")
-        self.userProtrait.image = UIImage(named: "who-is")
+        self.selectedImage.image = UIImage.gif(name: self.UNKNOWN_PHOTO)
+        self.userProtrait.image = UIImage(named: UNKNOWN_USER)
         self.getAllUnknownBodyFeatures()
         self.setupActivityHandler()
         // Do any additional setup after loading the view.
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
         self.unknownCollection.backgroundColor = .clear
         
         self.userProtrait.layer.masksToBounds = true
-        self.userProtrait.layer.borderWidth = 5
-        self.userProtrait.layer.borderColor = UIColor.green.cgColor
-        self.userProtrait.layer.cornerRadius = self.userProtrait.bounds.width / 3
+        self.userProtrait.layer.borderWidth = 1.0
+        self.userProtrait.layer.borderColor = UIColor.red.cgColor
+        self.userProtrait.layer.cornerRadius = self.userProtrait.bounds.width / 8
+
         
         self.selectedImage.layer.masksToBounds = true
-        self.selectedImage.layer.borderWidth = 5
-        self.selectedImage.layer.borderColor = UIColor.green.cgColor
-        self.selectedImage.layer.cornerRadius = self.selectedImage.bounds.width / 3
+        self.selectedImage.layer.borderWidth = 1.0
+        self.selectedImage.layer.borderColor = UIColor.red.cgColor
+        self.selectedImage.layer.cornerRadius = self.userProtrait.bounds.width / 8
 
     }
     
@@ -67,9 +73,9 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
         cell.imageView.image = UIImage(data: imageData! as Data)
         cell.imageView.layer.masksToBounds = true
-        cell.imageView.layer.borderWidth = 2.5
-        cell.imageView.layer.borderColor = UIColor.green.cgColor
-        cell.imageView.layer.cornerRadius = cell.imageView.bounds.width / 7
+        cell.imageView.layer.borderWidth = 0.8
+        cell.imageView.layer.borderColor = UIColor.red.cgColor
+        cell.imageView.layer.cornerRadius = cell.imageView.bounds.width / 8
         
         return cell
     }
@@ -81,6 +87,8 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         self.selectedImage.image = UIImage(data: imageData! as Data)
         self.selectedImageID = oneFeature.photoID!
         self.selectedFeature = oneFeature
+        self.imageLabel.text = "Image selected"
+        self.selectedImage.layer.borderColor = UIColor.green.cgColor
     }
     
     func deleteUnknownImage(imageID: String){
@@ -92,13 +100,18 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
                     print ("----- delete one unknow photo in \(snapShot.ref.child(item.key).description)")
                     snapShot.ref.child(item.key).removeValue()
                 }
+                self.unknownFeatureList = []
                 self.getAllUnknownBodyFeatures()
-                self.selectedImage.image = UIImage(named: "who-is")
-                self.userProtrait.image = UIImage(named: "who-is")
+                self.selectedImage.image = UIImage.gif(name: self.UNKNOWN_PHOTO)
+                self.userProtrait.image = UIImage(named: self.UNKNOWN_USER)
                 self.selectedUser = nil
                 self.selectedImageID = nil
                 self.selectedFeature = nil
-                self.nameLabel.text = "No user chosen"
+                self.nameLabel.text = "Unknown user"
+                self.imageLabel.text = "Unknown image"
+                self.userProtrait.layer.borderColor = UIColor.red.cgColor
+                self.selectedImage.layer.borderColor = UIColor.red.cgColor
+
             }
         }
     }
@@ -213,6 +226,7 @@ class UnknownImageViewController: UIViewController,UserSelectingDelegate,UIColle
         let photoData = user.portrait!
         let imageData = NSData(base64Encoded: photoData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
         self.userProtrait.image = UIImage(data: imageData! as Data)
+        self.userProtrait.layer.borderColor = UIColor.green.cgColor
         print ("user: \(user.name!) is chosen")
     }
     

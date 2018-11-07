@@ -12,7 +12,7 @@ class ImageCollectionViewController: UICollectionViewController {
 
     private let reuseIdentifier = "imageCell"
     private let sectionInsets = UIEdgeInsets(top:50.0, left:20.0, bottom:50.0, right:20.0)
-    private let itemsPerRow: CGFloat = 2
+    private let itemsPerRow: CGFloat = 3
 
     var storedImagesList:[String]?
     var selectedImagesDelegate:SelectedImagesDelegate?
@@ -20,7 +20,7 @@ class ImageCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.backgroundView = UIImageView(image: UIImage.gif(name: "beach-gif"))
+        self.collectionView?.backgroundView = UIImageView(image: UIImage(named: "background"))
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,8 +60,8 @@ class ImageCollectionViewController: UICollectionViewController {
         //cell.backgroundColor = UIColor.white
         cell.imageView.image = getImageFromLocalStorage(imageID: storedImagesList![indexPath.row])
         cell.imageView.layer.masksToBounds = true
-        cell.imageView.layer.borderWidth = 2.0
-        cell.imageView.layer.borderColor = UIColor.green.cgColor
+        cell.imageView.layer.borderWidth = 1.0
+        cell.imageView.layer.borderColor = UIColor.cyan.cgColor
         cell.imageView.layer.cornerRadius = cell.imageView.bounds.width / 7
         return cell
     }

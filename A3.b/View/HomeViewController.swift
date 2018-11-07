@@ -94,7 +94,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     }
     // set initial UI
     func setUI(){
-        backgroundImageView.image = UIImage.gif(name: "beach-gif")
+        backgroundImageView.image = UIImage(named: "background")
         backgroundImageView.layer.zPosition = -1
         epBtn.layer.cornerRadius = frBtn.bounds.size.width/9
         rdBtn.layer.cornerRadius = frBtn.bounds.size.width/9
@@ -102,6 +102,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         vcBtn.layer.cornerRadius = frBtn.bounds.size.width/9
         lgBtn.layer.cornerRadius = frBtn.bounds.size.width/9
         aboutUsView.layer.zPosition = 1
+
     }
     
     // change the home page data when a user edit his or her profile in edit personal profile page

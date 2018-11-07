@@ -36,7 +36,7 @@ class TodayViewController: UIViewController {
         weightView.layer.cornerRadius = weightView.bounds.width/7
         // Do any additional setup after loading the view.
         
-        self.background.image =  UIImage.gif(name: "beach-gif")
+        self.background.image =  UIImage(named: "background")
         background.contentMode = .scaleToFill
         self.background.layer.zPosition = -1
     }
@@ -107,7 +107,7 @@ class TodayViewController: UIViewController {
     // get recent photo taken time from person object
     func getPhotoTimeGap() -> Double{
         let currentInterval = Date().timeIntervalSince1970
-        let timeGap = (currentInterval - (person?.data.first?.dateTime)!)/1000/60/60/24
+        let timeGap = (currentInterval - (person?.data.first?.dateTime)!)/60/60/24
         return timeGap
     }
     
