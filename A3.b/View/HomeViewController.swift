@@ -25,13 +25,19 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
     @IBOutlet weak var vcBtn: UIButton!
     @IBOutlet weak var lgBtn: UIButton!
     @IBOutlet weak var fgBtn: UIButton!
-    
+    @IBOutlet var familyButtons: [UIButton]!
+    @IBOutlet var personalButtons: [UIButton]!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var personOpBtn: UIButton!
+    @IBOutlet weak var familyOpBtn: UIButton!
+    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var aboutUsView: UIView!
     
     var ref = Database.database().reference()
     var person: Person?
     var raspberryID: String?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var menuShowing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,18 +47,61 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func handleFamilyOption(_ sender: UIButton) {
+        familyButtons.forEach{(button) in
+            UIView.animate(withDuration: 0.3, animations: {
+                button.isHidden = !button.isHidden
+                button.layer.cornerRadius = button.bounds.size.width/9
+                self.view.layoutIfNeeded()
+            })
+        }
+        personalButtons.forEach{(button) in
+            UIView.animate(withDuration: 0.3, animations: {
+                button.isHidden = !button.isHidden
+                button.layer.cornerRadius = button.bounds.size.width/9
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    @IBAction func openHelp(_ sender: Any) {
+        if (menuShowing){
+            leadingConstraint.constant = 375
+        }
+        else{
+            leadingConstraint.constant = 217
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()})
+        }
+        menuShowing = !menuShowing
+    }
+    
+    @IBAction func handlePersonOption(_ sender: Any) {
+        personalButtons.forEach{(button) in
+            UIView.animate(withDuration: 0.3, animations: {
+                button.isHidden = !button.isHidden
+                button.layer.cornerRadius = button.bounds.size.width/9
+                self.view.layoutIfNeeded()
+            })
+        }
+        familyButtons.forEach{(button) in
+            UIView.animate(withDuration: 0.3, animations: {
+                button.isHidden = !button.isHidden
+                button.layer.cornerRadius = button.bounds.size.width/9
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
     // set initial UI
     func setUI(){
         backgroundImageView.image = UIImage.gif(name: "beach-gif")
         backgroundImageView.layer.zPosition = -1
-        frBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        flBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        epBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        rdBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        mvBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        vcBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        lgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
-        fgBtn.layer.cornerRadius = frBtn.bounds.size.width/8
+        epBtn.layer.cornerRadius = frBtn.bounds.size.width/9
+        rdBtn.layer.cornerRadius = frBtn.bounds.size.width/9
+        mvBtn.layer.cornerRadius = frBtn.bounds.size.width/9
+        vcBtn.layer.cornerRadius = frBtn.bounds.size.width/9
+        lgBtn.layer.cornerRadius = frBtn.bounds.size.width/9
+        aboutUsView.layer.zPosition = 1
     }
     
     // change the home page data when a user edit his or her profile in edit personal profile page
@@ -150,7 +199,7 @@ class HomeViewController: UIViewController ,ManagePersonProtocol{
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginPage") as! LoginViewController
             self.navigationController?.pushViewController(newViewController, animated: true)
-//            self.present(newViewController, animated: true, completion: nil)
+
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
